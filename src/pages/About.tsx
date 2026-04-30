@@ -54,7 +54,7 @@ export default function About() {
               Luma was born from a simple idea: that non-alcoholic drinks deserve the same craft, care, and presentation as any fine cocktail. In Amman's event market, we saw a gap between expensive, inflexible hotel services and unprofessional budget operators.
             </p>
             <p>
-              We built Luma to fill that space. A fully branded, mobile bar experience that brings crystal glassware, handcrafted botanical recipes, and elite staff directly to your venue. Whether it's a private estate wedding or an intimate gallery opening, the ritual of the drink is preserved in its most elegant form.
+              We built Luma to fill that space. A fully branded, mobile bar experience that brings premium glassware, handcrafted botanical recipes, and elite staff directly to your venue. Whether it's a private estate wedding or an intimate gallery opening, the ritual of the drink is preserved in its most elegant form.
             </p>
             <p>
               The experience is always consistent: elevated, personal, and unforgettable.
@@ -74,7 +74,7 @@ export default function About() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { icon: "✦", title: "Craft Mocktails", desc: "Signature botanical drinks developed in-house with premium ingredients." },
-              { icon: "◆", title: "Crystal Glassware", desc: "Served exclusively in proper glass. No plastic counterparts." },
+              { icon: "◆", title: "Premium Glassware", desc: "Served exclusively in proper glass. No plastic counterparts." },
               { icon: "◇", title: "Branded Station", desc: "Our bars act as a sophisticated furniture piece for your event decor." },
               { icon: "☆", title: "Elite Staff", desc: "Trained, uniformed professionals who understand high-end hospitality." }
             ].map((s, i) => (

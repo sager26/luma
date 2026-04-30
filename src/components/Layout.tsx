@@ -4,6 +4,7 @@ import Footer from './Footer';
 import AmbientBackground from './AmbientBackground';
 import { motion, AnimatePresence } from 'motion/react';
 import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 /**
  * Layout wraps all pages, providing navigation and global animations.
@@ -17,7 +18,7 @@ export default function Layout() {
       <Navbar />
       
       <main className="flex-grow z-10">
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' })}>
           <motion.div
             key={location.pathname}
             initial={{ opacity: 0, y: 10 }}

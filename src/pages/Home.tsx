@@ -107,7 +107,7 @@ export default function Home() {
           </motion.h1>
 
           <motion.p variants={itemVariants} className="text-cream/80 text-sm md:text-xl max-w-xl mx-auto mb-12 font-light leading-relaxed drop-shadow-md">
-            Handcrafted botanical recipes served in crystal glassware. A branded mobile bar delivered to your venue for moments that command distinction.
+            Handcrafted botanical recipes served in premium glassware. A branded mobile bar delivered to your venue for moments that command distinction.
           </motion.p>
 
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -143,7 +143,7 @@ export default function Home() {
       {/* Trust Banner */}
       <section className="py-12 bg-white/[0.02] border-y border-white/5 flex items-center justify-center overflow-hidden whitespace-nowrap">
         <div className="flex gap-12 text-[11px] uppercase tracking-[0.4em] text-gold/30 font-light">
-          {Array(10).fill("◆ Amman's Premier Bar ◆ Alcohol-Free ◆ Crystal Glassware ◆").map((text, i) => (
+          {Array(10).fill("◆ Amman's Premier Bar ◆ Alcohol-Free ◆ Premium Glassware ◆").map((text, i) => (
             <motion.span 
               key={i}
               animate={{ x: "-100%" }}
@@ -172,8 +172,8 @@ export default function Home() {
               },
               { 
                 icon: <GlassWater className="w-12 h-12 text-gold mb-8" />,
-                title: "Crystal Glassware", 
-                desc: "Every guest is served in genuine crystal martinis, highballs, or rocks glasses. Weight, clarity, and precision." 
+                title: "Premium Glassware", 
+                desc: "Every guest is served in genuine premium martinis, highballs, or rocks glasses. Weight, clarity, and precision." 
               },
               { 
                 icon: <Award className="w-12 h-12 text-gold mb-8" />,
@@ -196,52 +196,6 @@ export default function Home() {
                 <p className="text-sm text-cream/50 leading-relaxed font-light max-w-sm">{f.desc}</p>
               </motion.div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Mood Gallery Section */}
-      <section className="py-32 bg-ink-dark relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-            <div className="max-w-xl">
-              <span className="label-micro block mb-4">The Ritual</span>
-              <h2 className="display text-4xl md:text-6xl italic">Moments worth <br /> <em className="text-gold-warm not-italic underline decoration-gold/20 underline-offset-8">remembering.</em></h2>
-            </div>
-            <Link to="/contact" className="text-[10px] uppercase tracking-[0.3em] text-gold hover:text-gold-pale transition-all flex items-center gap-3 group">
-              Start your booking <span className="group-hover:translate-x-2 transition-transform">→</span>
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 h-[800px] md:h-[600px]">
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="md:col-span-8 relative overflow-hidden rounded-lg group"
-            >
-              <img 
-                src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=1600" 
-                alt="Luxury mocktail preparation" 
-                className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/20 via-transparent to-transparent" />
-            </motion.div>
-            
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="md:col-span-4 relative overflow-hidden rounded-lg group"
-            >
-              <img 
-                src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=1200" 
-                alt="Elegant crystal glassware" 
-                className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/20 via-transparent to-transparent" />
-            </motion.div>
           </div>
         </div>
       </section>

@@ -66,62 +66,228 @@ export default function AmbientBackground() {
         ))}
       </div>
 
-      {/* High-intensity Shiny Stars (3D felt points) */}
-      <div className="absolute inset-0 z-0">
-        {[...Array(24)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full bg-white shadow-[0_0_15px_rgba(255,255,255,0.8)]"
-            style={{
-              width: Math.random() > 0.8 ? '3px' : '1.5px',
-              height: Math.random() > 0.8 ? '3px' : '1.5px',
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`
-            }}
-            animate={{
-              scale: [0, 1.2, 0],
-              opacity: [0, 0.8, 0]
-            }}
-            transition={{
-              duration: 3 + Math.random() * 5,
-              repeat: Infinity,
-              delay: Math.random() * 10,
-              ease: "easeInOut"
-            }}
-          />
-        ))}
+      {/* 3D Real-feel Parallax Stars */}
+      <div className="absolute inset-0 z-0 overflow-hidden" style={{ perspective: '1000px' }}>
+        {/* Distant Stars - slow, small, many */}
+        <motion.div 
+          className="absolute inset-0"
+          animate={{ y: ['0%', '-5%'], x: ['0%', '-2%'] }}
+          transition={{ duration: 60, repeat: Infinity, ease: "linear", repeatType: "reverse" }}
+        >
+          {[...Array(60)].map((_, i) => (
+            <div
+              key={`dist-${i}`}
+              className="absolute rounded-full bg-white/70 shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+              style={{
+                width: '1px',
+                height: '1px',
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+            />
+          ))}
+        </motion.div>
+
+        {/* Mid-ground Stars - medium speed, some twinkling */}
+        <motion.div 
+          className="absolute inset-0"
+          animate={{ y: ['0%', '-10%'], x: ['0%', '-4%'] }}
+          transition={{ duration: 45, repeat: Infinity, ease: "linear", repeatType: "reverse" }}
+          style={{ translateZ: '100px' }}
+        >
+          {[...Array(30)].map((_, i) => (
+            <motion.div
+              key={`mid-${i}`}
+              className="absolute rounded-full bg-white shadow-[0_0_12px_rgba(255,255,255,1)]"
+              style={{
+                width: '2px',
+                height: '2px',
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`
+              }}
+              animate={{ opacity: [0.4, 1, 0.4], scale: [1, 1.5, 1] }}
+              transition={{
+                duration: 3 + Math.random() * 4,
+                repeat: Infinity,
+                delay: Math.random() * 5,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
+        </motion.div>
+
+        {/* Near 'Bright' Stars - fast, larger, intense twinkle */}
+        <motion.div 
+          className="absolute inset-0"
+          animate={{ y: ['0%', '-20%'], x: ['0%', '-8%'] }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear", repeatType: "reverse" }}
+          style={{ translateZ: '300px' }}
+        >
+          {[...Array(15)].map((_, i) => (
+            <motion.div
+              key={`near-${i}`}
+              className="absolute rounded-full bg-white shadow-[0_0_20px_rgba(255,255,255,1),_0_0_40px_rgba(212,175,92,0.6)]"
+              style={{
+                width: '3px',
+                height: '3px',
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`
+              }}
+              animate={{
+                scale: [0.5, 2, 0.5],
+                opacity: [0.2, 1, 0.2]
+              }}
+              transition={{
+                duration: 2 + Math.random() * 3,
+                repeat: Infinity,
+                delay: Math.random() * 5,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
+        </motion.div>
       </div>
 
-      {/* Floating Decorative Glyphs */}
+      {/* Floating Decorative Martini Glasses */}
       <motion.div 
-        className="absolute top-[15%] left-[10%] text-gold-warm text-[clamp(120px,15vw,200px)] font-serif drop-shadow-[0_0_40px_rgba(212,175,92,0.6)]"
+        className="absolute top-[15%] left-[10%] text-gold-warm drop-shadow-[0_0_20px_rgba(212,175,92,0.4)] pointer-events-auto cursor-pointer group"
         animate={{ 
-          rotateX: [-25, 25],
-          rotateY: [-25, 25],
-          rotateZ: [-15, 15], 
-          scale: [1, 1.1, 1],
-          y: [0, 20, 0],
-          opacity: [0.15, 0.3, 0.15]
+          rotateX: [-5, 10, -5, 8, -5],
+          rotateY: [-10, 15, -12, 10, -10],
+          rotateZ: [-8, 6, -5, 4, -8], 
+          x: [0, 15, -10, 5, 0],
+          y: [0, -20, 15, -10, 0]
         }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
         style={{ perspective: "1000px" }}
       >
-        ✦
+        <motion.div
+          animate={{ scale: [0.95, 1.05, 0.98, 1.08, 0.95], opacity: [0.15, 0.25, 0.15, 0.3, 0.15] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+          className="group-hover:hidden"
+        >
+          <svg viewBox="0 0 24 24" width="200" height="200" stroke="currentColor" strokeWidth="0.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+            {/* Glass bowl */}
+            <path d="M4 6h16l-8 8-8-8z" fill="url(#liquidGrad)" strokeOpacity="0.8" />
+            <path d="M4 6h16l-8 8-8-8z" fill="none" strokeWidth="1" />
+            {/* Liquid line */}
+            <path d="M7 9h10" strokeWidth="0.5" strokeOpacity="0.8" />
+            {/* Stem */}
+            <path d="M12 14v7" strokeWidth="1.5" />
+            {/* Base */}
+            <path d="M9 21h6" strokeWidth="1.5" />
+            {/* Olive / Garnish */}
+            <circle cx="15" cy="5" r="1.5" strokeWidth="1" />
+            <path d="M12 10l4.5-6.5" strokeWidth="0.5" />
+            
+            <defs>
+              <linearGradient id="liquidGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="currentColor" stopOpacity="0.05" />
+                <stop offset="100%" stopColor="currentColor" stopOpacity="0.4" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </motion.div>
+        
+        {/* Hover State: Glowing & Pulsing */}
+        <motion.div
+          animate={{ 
+            scale: [1.1, 1.2, 1.1], 
+            opacity: [0.8, 1, 0.8],
+            filter: [
+              "drop-shadow(0 0 20px rgba(212,175,92,0.8))",
+              "drop-shadow(0 0 50px rgba(212,175,92,1))",
+              "drop-shadow(0 0 20px rgba(212,175,92,0.8))"
+            ]
+          }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          className="hidden group-hover:block absolute inset-0"
+        >
+          <svg viewBox="0 0 24 24" width="200" height="200" stroke="currentColor" strokeWidth="0.8" fill="none" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M4 6h16l-8 8-8-8z" fill="url(#liquidGradHover)" strokeOpacity="1" />
+            <path d="M4 6h16l-8 8-8-8z" fill="none" strokeWidth="1.5" />
+            <path d="M7 9h10" strokeWidth="0.8" strokeOpacity="1" />
+            <path d="M12 14v7" strokeWidth="2" />
+            <path d="M9 21h6" strokeWidth="2" />
+            <circle cx="15" cy="5" r="1.5" strokeWidth="1.5" />
+            <path d="M12 10l4.5-6.5" strokeWidth="0.8" />
+            <defs>
+              <linearGradient id="liquidGradHover" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="currentColor" stopOpacity="0.2" />
+                <stop offset="100%" stopColor="currentColor" stopOpacity="0.6" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </motion.div>
       </motion.div>
+
       <motion.div 
-        className="absolute bottom-[10%] right-[8%] text-gold-warm text-[clamp(120px,15vw,200px)] font-serif drop-shadow-[0_0_40px_rgba(212,175,92,0.6)]"
+        className="absolute bottom-[10%] right-[8%] text-gold-warm drop-shadow-[0_0_20px_rgba(212,175,92,0.4)] pointer-events-auto cursor-pointer group"
         animate={{ 
-          rotateX: [25, -25],
-          rotateY: [25, -25],
-          rotateZ: [15, -15], 
-          scale: [1, 1.1, 1],
-          y: [0, -30, 0],
-          opacity: [0.15, 0.3, 0.15]
+          rotateX: [8, -5, 10, -8, 8],
+          rotateY: [15, -10, 8, -12, 15],
+          rotateZ: [6, -8, 5, -5, 6], 
+          x: [0, -20, 15, -10, 0],
+          y: [0, 25, -15, 10, 0]
         }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+        transition={{ duration: 28, repeat: Infinity, ease: "easeInOut", delay: 1 }}
         style={{ perspective: "1000px" }}
       >
-        ✦
+        <motion.div
+          animate={{ scale: [0.95, 1.05, 0.98, 1.08, 0.95], opacity: [0.15, 0.25, 0.15, 0.3, 0.15] }}
+          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          className="group-hover:hidden"
+        >
+          <svg viewBox="0 0 24 24" width="180" height="180" stroke="currentColor" strokeWidth="0.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+            {/* Coup or different glass shape */}
+            <path d="M3 8c0 4.97 4 9 9 9s9-4.03 9-9" fill="url(#coupGrad)" strokeOpacity="0.8" />
+            <path d="M3 8c0 4.97 4 9 9 9s9-4.03 9-9" fill="none" strokeWidth="1" />
+            {/* Top rim */}
+            <path d="M3 8h18" strokeWidth="1" />
+            {/* Liquid line */}
+            <path d="M5 10c2.5 1.5 11.5 1.5 14 0" strokeWidth="0.5" fill="none" strokeOpacity="0.8" />
+            {/* Stem */}
+            <path d="M12 17v4" strokeWidth="1.5" />
+            {/* Base */}
+            <path d="M8 21h8" strokeWidth="1.5" />
+            <defs>
+              <linearGradient id="coupGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="currentColor" stopOpacity="0.05" />
+                <stop offset="100%" stopColor="currentColor" stopOpacity="0.4" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </motion.div>
+
+        {/* Hover State: Glowing & Pulsing */}
+        <motion.div
+          animate={{ 
+            scale: [1.1, 1.2, 1.1], 
+            opacity: [0.8, 1, 0.8],
+            filter: [
+              "drop-shadow(0 0 20px rgba(212,175,92,0.8))",
+              "drop-shadow(0 0 50px rgba(212,175,92,1))",
+              "drop-shadow(0 0 20px rgba(212,175,92,0.8))"
+            ]
+          }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          className="hidden group-hover:block absolute inset-0"
+        >
+          <svg viewBox="0 0 24 24" width="180" height="180" stroke="currentColor" strokeWidth="0.8" fill="none" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 8c0 4.97 4 9 9 9s9-4.03 9-9" fill="url(#coupGradHover)" strokeOpacity="1" />
+            <path d="M3 8c0 4.97 4 9 9 9s9-4.03 9-9" fill="none" strokeWidth="1.5" />
+            <path d="M3 8h18" strokeWidth="1.5" />
+            <path d="M5 10c2.5 1.5 11.5 1.5 14 0" strokeWidth="0.8" fill="none" strokeOpacity="1" />
+            <path d="M12 17v4" strokeWidth="2" />
+            <path d="M8 21h8" strokeWidth="2" />
+            <defs>
+              <linearGradient id="coupGradHover" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="currentColor" stopOpacity="0.2" />
+                <stop offset="100%" stopColor="currentColor" stopOpacity="0.6" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </motion.div>
       </motion.div>
     </div>
   );

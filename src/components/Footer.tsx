@@ -20,7 +20,7 @@ export default function Footer() {
         </div>
 
         <ul className="flex flex-col items-center gap-4">
-          {['Home', 'About', 'Packages', 'Gallery', 'Contact'].map((item) => (
+          {['Home', 'About', 'Packages', 'Contact'].map((item) => (
             <li key={item}>
               <Link 
                 to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}

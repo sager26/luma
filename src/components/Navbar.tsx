@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import BookingButton from './BookingButton';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -23,7 +24,6 @@ export default function Navbar() {
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
     { name: 'Packages', path: '/packages' },
-    { name: 'Gallery', path: '/gallery' },
     { name: 'Contact', path: '/contact' },
   ];
 
@@ -53,17 +53,9 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
-            <motion.a 
-              href="https://wa.me/962792324444" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="btn-luxury bg-gold text-ink font-medium border border-gold hover:bg-gold-warm hover:border-gold-warm"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            >
-              Book Now
-            </motion.a>
+            <BookingButton 
+              text="Book Now"
+            />
           </div>
 
           <button 
@@ -99,16 +91,10 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
-            <motion.a 
-              href="https://wa.me/962792324444" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="btn-luxury bg-gold text-ink font-medium mt-4 w-full max-w-[200px] text-center"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Book Now
-            </motion.a>
+            <BookingButton 
+              text="Book Now"
+              className="mt-4 w-full max-w-[200px]"
+            />
           </motion.div>
         )}
       </AnimatePresence>

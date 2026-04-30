@@ -20,8 +20,14 @@ function PackageCard({
     const rx = ((y / r.height) - 0.5) * -4;
     const ry = ((x / r.width) - 0.5) * 4;
     
+    // Parallax values for inner elements
+    const px = ((x / r.width) - 0.5) * -15;
+    const py = ((y / r.height) - 0.5) * -15;
+    
     cardRef.current.style.setProperty('--rx', `${rx}deg`);
     cardRef.current.style.setProperty('--ry', `${ry}deg`);
+    cardRef.current.style.setProperty('--px', `${px}px`);
+    cardRef.current.style.setProperty('--py', `${py}px`);
     cardRef.current.style.setProperty('--mx', `${x}px`);
     cardRef.current.style.setProperty('--my', `${y}px`);
   };
@@ -30,6 +36,8 @@ function PackageCard({
     if (!cardRef.current) return;
     cardRef.current.style.setProperty('--rx', '0deg');
     cardRef.current.style.setProperty('--ry', '0deg');
+    cardRef.current.style.setProperty('--px', '0px');
+    cardRef.current.style.setProperty('--py', '0px');
   };
 
   return (
@@ -72,29 +80,39 @@ function PackageCard({
         </div>
         <div className="flex gap-8 border-t border-gold/10 md:border-none pt-6 md:pt-0">
           <div className="text-right">
-            <div className="text-[8px] uppercase tracking-widest text-cream/30 mb-1">Guests</div>
-            <div className="display text-2xl text-cream">{guests}</div>
+            <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold-warm mb-2 border-b border-gold/20 pb-1">Guests</div>
+            <div className="display text-3xl text-cream drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">{guests}</div>
           </div>
           <div className="text-right">
-            <div className="text-[8px] uppercase tracking-widest text-cream/30 mb-1">Hours</div>
-            <div className="display text-2xl text-cream">{hours}</div>
+            <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold-warm mb-2 border-b border-gold/20 pb-1">Hours</div>
+            <div className="display text-3xl text-cream drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">{hours}</div>
           </div>
           <div className="text-right">
-            <div className="text-[8px] uppercase tracking-widest text-cream/30 mb-1">Staff</div>
-            <div className="display text-2xl text-cream">{staff}</div>
+            <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold-warm mb-2 border-b border-gold/20 pb-1">Staff</div>
+            <div className="display text-3xl text-cream drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">{staff}</div>
           </div>
         </div>
       </div>
 
       <div className="relative z-10 p-8 md:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12">
-        <div>
+        <div 
+          className="transition-transform duration-200 ease-out will-change-transform"
+          style={{ transform: 'translate3d(var(--px, 0px), var(--py, 0px), 0)' }}
+        >
           <div className="label-micro text-gold/60 mb-6 block">What's Included</div>
           <ul className="space-y-4">
             {features.map((f: string, i: number) => (
-              <li key={i} className="text-sm text-cream/70 flex items-start gap-3 leading-relaxed">
+              <motion.li 
+                key={i} 
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: delay + 0.5 + (i * 0.1), duration: 0.5 }}
+                className="text-sm text-cream/70 flex items-start gap-3 leading-relaxed"
+              >
                 <span className="text-gold text-[10px] mt-1.5">✦</span>
                 <span className="font-light">{f}</span>
-              </li>
+              </motion.li>
             ))}
           </ul>
         </div>
@@ -153,7 +171,7 @@ export default function Packages() {
             staff="1 to 2"
             features={[
               "Focused service from the Classic botanical menu",
-              "Crystal glassware: Rocks and Highballs",
+              "Premium glassware: Rocks and Highballs",
               "Single Luma branded bar station",
               "Standard drink display plating",
               "Full setup, glassware logistic & teardown"
@@ -222,13 +240,19 @@ export default function Packages() {
               { title: "Experience Station", desc: "An interactive bar where guests customise their botanical profiles." },
               { title: "Recipe Booklet", desc: "A personalised printed booklet of drinks served at your event." }
             ].map((a, i) => (
-              <div key={i} className="p-8 border border-gold/10 bg-ink-card/30 rounded backdrop-blur hover:border-gold/30 transition-all group flex flex-col justify-between">
+              <a 
+                key={i} 
+                href={`https://wa.me/962792324444?text=${encodeURIComponent(`Hi, I'm interested in adding the "${a.title}" enhancement to my event.`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-8 border border-gold/10 bg-ink-card/30 rounded backdrop-blur hover:border-gold/30 transition-all group flex flex-col justify-between cursor-pointer relative z-20"
+              >
                 <div>
                   <h3 className="display text-xl mb-3 text-gold-warm group-hover:tracking-wider transition-all duration-500">{a.title}</h3>
                   <p className="text-[10px] text-cream/40 leading-relaxed uppercase tracking-widest font-light">{a.desc}</p>
                 </div>
                 <div className="mt-6 text-[9px] uppercase tracking-widest text-gold/40 border-t border-gold/5 pt-4 group-hover:text-gold transition-colors">Ask Us &rsaquo;</div>
-              </div>
+              </a>
             ))}
           </div>
         </section>
