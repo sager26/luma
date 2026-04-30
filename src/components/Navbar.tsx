@@ -6,14 +6,28 @@ import BookingButton from './BookingButton';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setIsScrolled(currentScrollY > 50);
+      
+      // Hide navbar when scrolling down, show when scrolling up
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -32,30 +46,12 @@ export default function Navbar() {
       <nav 
         className={`fixed top-0 left-0 right-0 z-[100] px-6 md:px-12 transition-all duration-300 border-b border-gold/10 backdrop-blur-md ${
           isScrolled ? 'py-4 bg-ink-dark/95' : 'py-6 bg-ink-dark/80'
-        }`}
+        } ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link to="/" className="flex items-center group">
-            <svg viewBox="0 0 500 500" className="w-[80px] md:w-[100px] h-auto transition-transform duration-500 group-hover:scale-105" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#E3C471" />
-                  <stop offset="50%" stopColor="#F9F0B8" />
-                  <stop offset="100%" stopColor="#D4AF37" />
-                </linearGradient>
-                <linearGradient id="gold-text" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#C9A353" />
-                  <stop offset="25%" stopColor="#F2DDA5" />
-                  <stop offset="50%" stopColor="#D1AC56" />
-                  <stop offset="75%" stopColor="#F9ECC7" />
-                  <stop offset="100%" stopColor="#C9A353" />
-                </linearGradient>
-              </defs>
-              <circle cx="250" cy="250" r="240" fill="#0A0A0A" />
-              <circle cx="250" cy="250" r="236" fill="none" stroke="url(#gold-gradient)" strokeWidth="2" />
-              <circle cx="250" cy="250" r="226" fill="none" stroke="url(#gold-gradient)" strokeWidth="4" />
-              <text x="250" y="275" fontFamily="'Times New Roman', serif" fontSize="130" fontWeight="400" fill="url(#gold-text)" textAnchor="middle" letterSpacing="8">LUMA</text>
-              <text x="250" y="335" fontFamily="'Arial', sans-serif" fontSize="18" fontWeight="300" fill="#C9A353" textAnchor="middle" letterSpacing="10" className="opacity-90">SIGNATURE MOCKTAILS</text>
+            <svg viewBox="0 0 400 120" className="w-[100px] md:w-[120px] h-auto fill-cream transition-colors group-hover:fill-gold-warm">
+              <text x="0" y="80" className="font-serif text-[72px] font-light tracking-[8px]">LUMA</text>
             </svg>
           </Link>
 

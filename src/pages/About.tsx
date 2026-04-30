@@ -63,6 +63,49 @@ export default function About() {
         </div>
       </section>
 
+      {/* Core Values Section */}
+      <section className="px-6 mb-32">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="label-micro block mb-4">Our Ethos</span>
+            <h2 className="display text-4xl md:text-5xl">Core Values</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {[
+              {
+                title: 'Craftsmanship',
+                desc: 'We treat mocktail creation as an art form. Every recipe is meticulously developed using house-made syrups, fresh botanicals, and premium non-alcoholic spirits.'
+              },
+              {
+                title: 'Exclusivity',
+                desc: 'Our bar setups and drink menus are tailored to your specific event, ensuring a one-of-a-kind experience that reflects your style and sophistication.'
+              },
+              {
+                title: 'Passion for Service',
+                desc: 'True luxury lies in the details. Our elegantly uniformed staff anticipate needs, providing impeccable and discreet hospitality to every guest.'
+              }
+            ].map((value, i) => (
+              <motion.div 
+                key={value.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: i * 0.15 }}
+                className="flex flex-col gap-4 text-center items-center"
+              >
+                <div className="w-12 h-12 rounded-full border border-gold/20 flex items-center justify-center text-gold mb-2">
+                  <span className="text-sm">0{i + 1}</span>
+                </div>
+                <h3 className="display text-2xl text-gold-warm">{value.title}</h3>
+                <p className="text-cream/50 text-sm leading-relaxed font-light">
+                  {value.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Services Grid (Mini) */}
       <section className="bg-ink-dark/40 py-32 px-6">
         <div className="max-w-7xl mx-auto">

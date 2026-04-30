@@ -10,8 +10,26 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
         <div className="flex flex-col items-center md:items-start text-center md:text-left gap-6">
           <Link to="/" className="group">
-            <svg viewBox="0 0 400 120" className="w-[100px] h-auto fill-cream group-hover:fill-gold-warm transition-colors">
-              <text x="0" y="80" className="font-serif text-[72px] font-light tracking-[8px]">LUMA</text>
+            <svg viewBox="0 0 500 500" className="w-[80px] h-auto fill-cream group-hover:scale-105 transition-transform duration-500" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="gold-gradient-footer" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#E3C471" />
+                  <stop offset="50%" stopColor="#F9F0B8" />
+                  <stop offset="100%" stopColor="#D4AF37" />
+                </linearGradient>
+                <linearGradient id="gold-text-footer" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#C9A353" />
+                  <stop offset="25%" stopColor="#F2DDA5" />
+                  <stop offset="50%" stopColor="#D1AC56" />
+                  <stop offset="75%" stopColor="#F9ECC7" />
+                  <stop offset="100%" stopColor="#C9A353" />
+                </linearGradient>
+              </defs>
+              <circle cx="250" cy="250" r="240" fill="#0A0A0A" />
+              <circle cx="250" cy="250" r="236" fill="none" stroke="url(#gold-gradient-footer)" strokeWidth="2" />
+              <circle cx="250" cy="250" r="226" fill="none" stroke="url(#gold-gradient-footer)" strokeWidth="4" />
+              <text x="250" y="275" fontFamily="'Times New Roman', serif" fontSize="130" fontWeight="400" fill="url(#gold-text-footer)" textAnchor="middle" letterSpacing="8">LUMA</text>
+              <text x="250" y="335" fontFamily="'Arial', sans-serif" fontSize="18" fontWeight="300" fill="#C9A353" textAnchor="middle" letterSpacing="10" className="opacity-90">SIGNATURE MOCKTAILS</text>
             </svg>
           </Link>
           <p className="text-xs text-cream/50 leading-relaxed max-w-xs">
