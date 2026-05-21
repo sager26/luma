@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Instagram, MessageCircle, Info, Loader2 } from 'lucide-react';
 import BookingButton from '../components/BookingButton';
+import SEO from '../components/SEO';
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const location = useLocation();
+  const [initialMessage, setInitialMessage] = useState('');
+
+  useEffect(() => {
+    if (location.state?.inquiryDrink) {
+      setInitialMessage(`Hello, I am interested in including the "${location.state.inquiryDrink}" signature mocktail in my event menu.`);
+    }
+  }, [location.state]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,8 +40,33 @@ export default function Contact() {
     }, 600);
   };
 
+  const contactSchema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "mainEntity": {
+      "@type": "LocalBusiness",
+      "name": "Luma Mocktail Bar",
+      "image": "https://images.unsplash.com/photo-1544145945-f904253d0c7e?auto=format&fit=crop&q=80&w=1200",
+      "@id": "",
+      "url": "https://lumajordan.com/",
+      "telephone": "+962792324444",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Amman",
+        "addressCountry": "JO"
+      }
+    }
+  };
+
   return (
     <div className="pt-32 pb-32">
+      <SEO 
+        title="Book Luma | Luxury Mocktail Bar Catering in Amman" 
+        description="Inquire about our premium alcohol-free mobile bar services for your next high-end event, wedding, or brand activation in Jordan."
+        keywords="book mocktail bar amman, hire mobile bar jordan, luxury event catering contact, non-alcoholic wedding bar, bespoke mocktail inquiry"
+        schema={contactSchema}
+        image="https://lumajordan.com/IMG_5410.JPG"
+      />
       <section className="text-center px-6 mb-24">
         <span className="label-micro block mb-4">Contact Luma</span>
         <h1 className="display text-5xl md:text-7xl mb-8">
@@ -101,18 +136,18 @@ export default function Contact() {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="flex flex-col gap-2">
-                <label className="label-micro text-xs">Your Name</label>
-                <input required name="name" type="text" placeholder="Full Name" className="bg-white/5 border-b border-gold/20 p-3 text-sm focus:border-gold outline-none transition-colors" />
+                <label htmlFor="name" className="label-micro text-xs">Your Name</label>
+                <input id="name" required name="name" type="text" placeholder="Full Name" className="bg-white/5 border-b border-gold/20 p-3 text-sm focus:border-gold outline-none transition-colors" />
               </div>
               <div className="flex flex-col gap-2">
-                <label className="label-micro text-xs">Phone / WhatsApp</label>
-                <input required name="phone" type="tel" placeholder="+962 7X XXX XXXX" className="bg-white/5 border-b border-gold/20 p-3 text-sm focus:border-gold outline-none transition-colors" />
+                <label htmlFor="phone" className="label-micro text-xs">Phone / WhatsApp</label>
+                <input id="phone" required name="phone" type="tel" placeholder="+962 7X XXX XXXX" className="bg-white/5 border-b border-gold/20 p-3 text-sm focus:border-gold outline-none transition-colors" />
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                  <div className="flex flex-col gap-2">
-                   <label className="label-micro text-xs">Event Type</label>
-                   <select required name="type" defaultValue="" className="bg-ink border-b border-gold/20 p-3 text-sm focus:border-gold outline-none transition-colors appearance-none cursor-pointer">
+                   <label htmlFor="type" className="label-micro text-xs">Event Type</label>
+                   <select id="type" required name="type" defaultValue="" className="bg-ink border-b border-gold/20 p-3 text-sm focus:border-gold outline-none transition-colors appearance-none cursor-pointer">
                      <option value="" disabled>Select occasion</option>
                      <option value="wedding">Wedding</option>
                      <option value="engagement">Engagement</option>
@@ -121,14 +156,14 @@ export default function Contact() {
                    </select>
                  </div>
                  <div className="flex flex-col gap-2">
-                  <label className="label-micro text-xs">Estimated Guests</label>
-                  <input required name="guests" type="number" placeholder="e.g. 150" min="20" className="bg-white/5 border-b border-gold/20 p-3 text-sm focus:border-gold outline-none transition-colors" />
+                  <label htmlFor="guests" className="label-micro text-xs">Estimated Guests</label>
+                  <input id="guests" required name="guests" type="number" placeholder="e.g. 150" min="20" className="bg-white/5 border-b border-gold/20 p-3 text-sm focus:border-gold outline-none transition-colors" />
                 </div>
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="label-micro text-xs">Message</label>
-                <textarea rows={3} name="message" placeholder="Tell us more about your event vision..." className="bg-white/5 border-b border-gold/20 p-3 text-sm focus:border-gold outline-none transition-colors resize-none" />
+                <label htmlFor="message" className="label-micro text-xs">Message</label>
+                <textarea id="message" rows={3} name="message" value={initialMessage} onChange={(e) => setInitialMessage(e.target.value)} placeholder="Tell us more about your event vision..." className="bg-white/5 border-b border-gold/20 p-3 text-sm focus:border-gold outline-none transition-colors resize-none" />
               </div>
 
               <button 

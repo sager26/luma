@@ -6,13 +6,13 @@
   --font-serif: "Cormorant Garamond", Georgia, serif;
   --font-arabic: "Noto Naskh Arabic", serif;
 
-  --color-ink: #18140C;
-  --color-ink-dark: #0C0A07;
-  --color-ink-card: #2A2418;
-  --color-gold: #B8912A;
-  --color-gold-warm: #D4AF5C;
-  --color-gold-pale: #F5EDD8;
-  --color-cream: #FAF6EE;
+  --color-ink: #110E09;
+  --color-ink-dark: #080604;
+  --color-ink-card: #1F1910;
+  --color-gold: #C9A23A;
+  --color-gold-warm: #E2B859;
+  --color-gold-pale: #FDF4DF;
+  --color-cream: #FFFCF5;
 
   --animate-float: float 6s ease-in-out infinite;
   --animate-spin-slow: spin 60s linear infinite;
@@ -64,11 +64,20 @@
     @apply font-sans text-[10px] uppercase tracking-[0.35em] text-gold;
   }
 
+  .bg-noise {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
   .glass-card {
-    @apply bg-ink-card/80 border border-gold/20 backdrop-blur-xl;
+    @apply bg-ink-card/60 border border-gold/30 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(201,162,58,0.05)] hover:shadow-[0_8px_32px_0_rgba(201,162,58,0.15)] hover:border-gold/50 transition-all duration-500;
   }
 
   .btn-luxury {
-    @apply relative overflow-hidden px-8 py-3.5 text-[11px] uppercase tracking-[0.25em] transition-all duration-300;
+    @apply relative overflow-hidden px-8 py-3.5 text-[11px] uppercase tracking-[0.25em] transition-all duration-500 hover:shadow-[0_0_20px_0_rgba(226,184,89,0.3)];
   }
 }

@@ -1,8 +1,28 @@
 import { motion } from 'motion/react';
+import SEO from '../components/SEO';
 
 export default function About() {
+  const aboutSchema = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "B2B Luxury Event & Wedding Beverage Catering in Amman | Luma Mocktail Bar",
+    "description": "Partner with Luma Mocktail Bar, Jordan's premier alcohol-free catering service. We elevate high-end corporate events, brand activations, and luxury weddings with bespoke botanical mocktails and VIP service.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Luma Mocktail Bar",
+      "url": "https://lumajordan.com"
+    }
+  };
+
   return (
     <div className="pt-32 pb-32">
+      <SEO 
+        title="B2B Luxury Event & Wedding Beverage Catering in Amman | Luma Mocktail Bar" 
+        description="Partner with Luma Mocktail Bar, Jordan's premier alcohol-free catering service. We elevate high-end corporate events, brand activations, and luxury weddings with bespoke botanical mocktails and VIP service."
+        keywords="B2B event planners Amman, corporate event catering Jordan, luxury brand activations Amman, VIP beverage catering Jordan, premium mobile bar hire for events, non-alcoholic B2B catering Amman, bespoke mocktail bar partners"
+        schema={aboutSchema}
+        image="https://lumajordan.com/IMG_5417.JPG"
+      />
       {/* Header */}
       <section className="text-center px-6 mb-32 relative overflow-hidden">
         <div className="max-w-4xl mx-auto relative z-10">

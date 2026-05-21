@@ -42,7 +42,8 @@ export default function Footer() {
             <li key={item}>
               <Link 
                 to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
-                className="text-sm text-cream/60 hover:text-gold-warm tracking-widest uppercase transition-colors"
+                className="text-[11px] text-cream/60 hover:text-gold-warm tracking-[0.3em] uppercase transition-colors"
+                style={{ fontFamily: 'var(--font-sans)', fontWeight: 300 }}
               >
                 {item}
               </Link>

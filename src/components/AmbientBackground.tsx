@@ -11,22 +11,25 @@ export default function AmbientBackground() {
       {/* Dynamic Cursor Halo - handled by separate mouse listener to avoid React re-renders on every frame */}
       <CursorHalo />
 
+      {/* Top Ambient Glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-[500px] bg-radial-gradient from-gold/10 via-gold/5 to-transparent pointer-events-none mix-blend-screen opacity-50" />
+
       {/* Orbital Rings - 3D Perspective */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-30">
+      <div className="absolute inset-0 flex items-center justify-center opacity-40">
         <motion.div 
-          className="absolute w-[320px] h-[320px] rounded-full border border-gold/10"
+          className="absolute w-[320px] h-[320px] rounded-full border border-gold/20 shadow-[0_0_40px_rgba(201,162,58,0.15)]"
           animate={{ rotate: 360 }}
           transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
           style={{ perspective: '1000px', rotateX: '45deg' }}
         />
         <motion.div 
-          className="absolute w-[500px] h-[500px] rounded-full border border-gold/5"
+          className="absolute w-[500px] h-[500px] rounded-full border border-gold/10"
           animate={{ rotate: -360 }}
           transition={{ duration: 90, repeat: Infinity, ease: "linear" }}
           style={{ perspective: '1000px', rotateX: '-30deg', rotateY: '15deg' }}
         />
         <motion.div 
-          className="absolute w-[680px] h-[680px] rounded-full border border-gold/5"
+          className="absolute w-[680px] h-[680px] rounded-full border border-gold/10 shadow-[inset_0_0_60px_rgba(201,162,58,0.05)]"
           animate={{ rotate: 360 }}
           transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
           style={{ perspective: '1000px', rotateX: '10deg' }}
@@ -48,7 +51,7 @@ export default function AmbientBackground() {
               y: [0, -30, 0],
               rotateX: [0, 180, 360],
               rotateY: [0, 360, 720],
-              opacity: [0.03, 0.08, 0.03]
+              opacity: [0.05, 0.15, 0.05]
             }}
             transition={{
               duration: 15 + (i * 2),
@@ -56,10 +59,10 @@ export default function AmbientBackground() {
               ease: "linear"
             }}
           >
-            <div className="w-16 h-24 border border-gold/40 relative transform rotate-45 rotate-x-45" 
+            <div className="w-16 h-24 border border-gold/50 relative transform rotate-45 rotate-x-45" 
                  style={{ 
-                   background: 'linear-gradient(135deg, rgba(184,145,42,0.1) 0%, transparent 100%)',
-                   boxShadow: 'inset 0 0 20px rgba(184,145,42,0.1)'
+                   background: 'linear-gradient(135deg, rgba(201,162,58,0.2) 0%, transparent 100%)',
+                   boxShadow: '0 0 30px rgba(201,162,58,0.2), inset 0 0 20px rgba(201,162,58,0.2)'
                  }} 
             />
           </motion.div>
@@ -77,10 +80,10 @@ export default function AmbientBackground() {
           {[...Array(60)].map((_, i) => (
             <div
               key={`dist-${i}`}
-              className="absolute rounded-full bg-white/70 shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+              className="absolute rounded-full bg-cream/80 shadow-[0_0_12px_rgba(255,252,245,0.9)]"
               style={{
-                width: '1px',
-                height: '1px',
+                width: '1.5px',
+                height: '1.5px',
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
               }}

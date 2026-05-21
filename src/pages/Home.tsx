@@ -2,9 +2,14 @@ import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Award, GlassWater, Users, MapPin, Sparkles } from 'lucide-react';
 import { useEffect } from 'react';
+import BookingButton from '../components/BookingButton';
+import SEO from '../components/SEO';
+import SignatureDrinksSection from '../components/SignatureDrinksSection';
+import TestimonialCarousel from '../components/TestimonialCarousel';
 
 export default function Home() {
   const mouseX = useMotionValue(0);
+
   const mouseY = useMotionValue(0);
 
   const springX = useSpring(mouseX, { stiffness: 100, damping: 30 });
@@ -13,8 +18,11 @@ export default function Home() {
   const textParallaxX = useTransform(springX, [-0.5, 0.5], [20, -20]);
   const textParallaxY = useTransform(springY, [-0.5, 0.5], [20, -20]);
   
-  const bgParallaxX = useTransform(springX, [-0.5, 0.5], [-10, 10]);
-  const bgParallaxY = useTransform(springY, [-0.5, 0.5], [-10, 10]);
+  const bgParallaxX = useTransform(springX, [-0.5, 0.5], [-30, 30]);
+  const bgParallaxY = useTransform(springY, [-0.5, 0.5], [-30, 30]);
+
+  const bgRotateX = useTransform(springY, [-0.5, 0.5], [5, -5]);
+  const bgRotateY = useTransform(springX, [-0.5, 0.5], [-5, 5]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -44,23 +52,39 @@ export default function Home() {
 
   return (
     <div className="pt-20">
+      <SEO 
+        title="Luma · Premium Alcohol-Free Mocktail Bar in Amman, Jordan"
+        description="Luma is Amman's first premium alcohol-free mobile mocktail bar. We provide bespoke botanical drinks, premium glassware, and elite service for weddings and luxury events in Jordan."
+        keywords="best mocktails amman, mocktail bar jordan, luxury mobile bar, non-alcoholic drinks amman, halal bar catering, wedding beverage service jordan, premium events amman"
+        image="https://lumajordan.com/IMG_5411.JPG"
+      />
       {/* Hero Section */}
       <section className="min-h-screen flex items-center justify-center relative px-6 text-center overflow-hidden">
-        {/* Background Image Parallax */}
-        <motion.div 
-          className="absolute inset-0 z-0 scale-110"
-          style={{ x: bgParallaxX, y: bgParallaxY }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 2 }}
-        >
-          <img 
-            src="https://images.unsplash.com/photo-1544145945-f904253d0c7e?auto=format&fit=crop&q=80&w=2000" 
-            alt="Luxury Bar Atmosphere" 
-            className="w-full h-full object-cover opacity-20 filter brightness-50"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-ink via-transparent to-ink" />
-        </motion.div>
+        {/* Background Image Parallax & Tilt */}
+        <div className="absolute inset-0 z-0 overflow-hidden" style={{ perspective: '1200px' }}>
+          <motion.div 
+            className="absolute inset-0 z-0 scale-[1.15]"
+            style={{ 
+              x: bgParallaxX, 
+              y: bgParallaxY,
+              rotateX: bgRotateX,
+              rotateY: bgRotateY
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 2 }}
+          >
+            <img 
+              src="https://images.unsplash.com/photo-1544145945-f904253d0c7e?auto=format&fit=crop&q=80&w=2000" 
+              alt="Luma premium alcohol-free mobile mocktail bar setup with botanical ingredients in Amman, Jordan" 
+              className="w-full h-full object-cover opacity-15 filter brightness-[0.3]"
+              fetchPriority="high"
+              sizes="100vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-ink via-ink/40 to-ink mix-blend-multiply" />
+            <div className="absolute inset-0 bg-radial-gradient from-transparent via-ink/60 to-ink" />
+          </motion.div>
+        </div>
 
         <motion.div 
           className="relative z-20 max-w-4xl mx-auto"
@@ -110,23 +134,18 @@ export default function Home() {
             Handcrafted botanical recipes served in premium glassware. A branded mobile bar delivered to your venue for moments that command distinction.
           </motion.p>
 
-          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-6 justify-center items-center w-full max-w-sm mx-auto sm:max-w-none">
             <Link 
               to="/packages" 
-              className="btn-luxury bg-gold text-ink font-bold shadow-[0_15px_40px_rgba(184,145,42,0.3)] hover:shadow-[0_20px_50px_rgba(184,145,42,0.5)] scale-110 relative overflow-hidden group/btn"
+              className="btn-luxury bg-gold text-ink font-semibold hover:bg-cream hover:text-ink transition-all shadow-[0_15px_40px_rgba(184,145,42,0.3)] hover:shadow-[0_20px_50px_rgba(184,145,42,0.5)] transform hover:-translate-y-1 w-full sm:w-auto text-center"
             >
-              <span className="relative z-10">Discover Packages</span>
-              <motion.div 
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-in-out" 
-                style={{ skewX: -20 }}
-              />
+              Explore Our Packages
             </Link>
-            <Link 
-              to="/contact" 
-              className="btn-luxury border border-gold/50 text-gold hover:bg-gold/10 backdrop-blur-sm transition-all"
-            >
-              Secure Your Date
-            </Link>
+            <BookingButton 
+              text="Inquire Now" 
+              variant="outline" 
+              className="border border-cream/30 text-cream hover:bg-white/5 backdrop-blur-sm w-full sm:w-auto"
+            />
           </motion.div>
 
           <motion.div 
@@ -228,6 +247,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <SignatureDrinksSection />
+
+      <TestimonialCarousel />
 
       {/* Short CTA Section */}
       <section className="py-32 bg-radial-gradient from-gold/10 via-transparent to-transparent text-center border-t border-gold/5 px-6">
