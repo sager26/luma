@@ -32,7 +32,7 @@ export default function Footer() {
               <text x="250" y="335" fontFamily="'Arial', sans-serif" fontSize="18" fontWeight="300" fill="#C9A353" textAnchor="middle" letterSpacing="10" className="opacity-90">SIGNATURE MOCKTAILS</text>
             </svg>
           </Link>
-          <p className="text-xs text-cream/50 leading-relaxed max-w-xs">
+          <p className="text-base text-cream leading-relaxed max-w-xs">
             100% alcohol-free mobile mocktail bar for weddings and luxury events in Amman, Jordan.
           </p>
         </div>
@@ -42,7 +42,7 @@ export default function Footer() {
             <li key={item}>
               <Link 
                 to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
-                className="text-[11px] text-cream/60 hover:text-gold-warm tracking-[0.3em] uppercase transition-colors"
+                className="text-base text-cream hover:text-gold-warm tracking-[0.3em] uppercase transition-colors"
                 style={{ fontFamily: 'var(--font-sans)', fontWeight: 300 }}
               >
                 {item}
@@ -55,25 +55,25 @@ export default function Footer() {
           <div className="flex flex-col gap-2">
             <a 
               href="https://wa.me/962792324444" 
-              className="text-sm text-gold hover:text-gold-warm transition-colors font-medium flex items-center gap-2 justify-end mb-1"
+              className="text-base text-gold hover:text-gold-warm transition-colors font-medium flex items-center gap-2 justify-end mb-1"
             >
               WhatsApp: +962 79 232 4444
             </a>
             <a 
               href="https://instagram.com/luma.jordan" 
-              className="text-sm text-cream/60 hover:text-gold-warm transition-colors flex items-center gap-2 justify-end"
+              className="text-base text-cream hover:text-gold-warm transition-colors flex items-center gap-2 justify-end"
             >
               <Instagram className="w-4 h-4" /> @luma.jordan
             </a>
           </div>
-          <p className="text-xs text-cream/40 uppercase tracking-widest mt-4">
+          <p className="text-base text-cream uppercase tracking-wider mt-4">
             Amman, Jordan
           </p>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-gold/5 flex flex-col items-center gap-4 text-center relative z-10">
-        <p className="text-[10px] text-cream/30 uppercase tracking-[0.2em]">
+        <p className="text-base text-cream uppercase tracking-[0.2em]">
           &copy; {new Date().getFullYear()} Luma · Crafted for moments worth remembering
         </p>
       </div>

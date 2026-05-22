@@ -93,13 +93,13 @@ const signatureDrinks = [
 
 function SkeletonDrinkCard() {
   return (
-    <div className="flex flex-col overflow-hidden rounded-2xl border border-white/5 bg-ink-dark/50 backdrop-blur-sm animate-pulse shadow-sm">
-      <div className="relative aspect-[4/5] overflow-hidden bg-ink-base/50 border-b border-white/5" />
+    <div className="flex flex-col overflow-hidden rounded-2xl border border-cream/5 bg-ink-dark/50 backdrop-blur-sm animate-pulse shadow-sm">
+      <div className="relative aspect-[4/5] overflow-hidden bg-ink-base/50 border-b border-cream/5" />
       <div className="p-6 md:p-8 flex-1 flex flex-col relative z-20 -mt-12 bg-ink-dark/80 rounded-b-2xl">
-        <div className="w-14 h-14 rounded-full bg-ink-base border border-white/5 mb-6 shadow-xl relative z-20" />
+        <div className="w-14 h-14 rounded-full bg-ink-base border border-cream/5 mb-6 shadow-xl relative z-20" />
         <div className="h-8 bg-ink-base/80 rounded-md w-3/4 mb-3" />
         <div className="h-3 bg-ink-base/60 rounded w-1/2 mb-5" />
-        <hr className="border-t border-white/5 my-2" />
+        <hr className="border-t border-cream/5 my-2" />
         <div className="space-y-3 mt-4">
           <div className="h-3 bg-ink-base/50 rounded w-full" />
           <div className="h-3 bg-ink-base/50 rounded w-5/6" />
@@ -128,7 +128,7 @@ export default function SignatureDrinksSection() {
         <div className="text-center mb-24">
           <span className="label-micro block mb-4 text-gold-warm">The Menu</span>
           <h2 className="display text-4xl md:text-6xl text-cream tracking-tight">Signature Serves</h2>
-          <p className="text-cream/50 mt-6 max-w-2xl mx-auto font-light">
+          <p className="text-cream mt-6 max-w-2xl mx-auto font-medium">
             Designed to stand alongside the world's finest cocktails. 
             Explore our collection to discover their unique profiles.
           </p>
@@ -154,7 +154,7 @@ export default function SignatureDrinksSection() {
                 onClick={() => setSelectedDrink(drink)}
                 className={`group flex flex-col overflow-hidden rounded-2xl border bg-ink-dark/80 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_15px_40px_rgba(0,0,0,0.4)] cursor-pointer ${drink.borderClass} ${drink.hoverBorder}`}
               >
-                <div className="relative aspect-[4/5] overflow-hidden bg-ink-base border-b border-white/5">
+                <div className="relative aspect-[4/5] overflow-hidden bg-ink-base border-b border-cream/5">
                   <motion.img 
                     layoutId={`image-${drink.name}`}
                     src={drink.image} 
@@ -165,7 +165,7 @@ export default function SignatureDrinksSection() {
                   />
                   <div className={`absolute inset-0 bg-gradient-to-t from-ink-dark via-ink-dark/10 to-transparent opacity-90`} />
                   <div className={`absolute inset-0 bg-gradient-to-br ${drink.colorClass} opacity-20 mix-blend-overlay z-0 transition-opacity duration-500 group-hover:opacity-40`} />
-                  <div className="absolute top-4 right-4 text-[10px] uppercase tracking-widest text-cream/80 font-mono px-3 py-1.5 bg-ink-dark/60 backdrop-blur-md rounded-full border border-white/10 z-10">
+                  <div className="absolute top-4 right-4 text-base uppercase tracking-wider text-cream font-mono px-3 py-1.5 bg-ink-dark/60 backdrop-blur-md rounded-full border border-cream/10 z-10">
                     {drink.cup}
                   </div>
                 </div>
@@ -178,13 +178,13 @@ export default function SignatureDrinksSection() {
                   <motion.h3 layoutId={`title-${drink.name}`} className="display text-2xl md:text-3xl mb-2 text-cream transition-colors duration-300">
                     {drink.name}
                   </motion.h3>
-                  <p className={`text-xs md:text-sm tracking-wide uppercase font-medium ${drink.textClass} mb-4`}>
+                  <p className={`text-base md:text-base tracking-wide uppercase font-medium ${drink.textClass} mb-4`}>
                     {drink.tagline}
                   </p>
                   
                   <hr className={`border-t ${drink.borderClass} my-2 opacity-30`} />
                   
-                  <p className="text-cream/70 text-sm md:text-base leading-relaxed font-light mt-4 mb-4 flex-1 line-clamp-3">
+                  <p className="text-cream text-base md:text-base leading-relaxed font-medium mt-4 mb-4 flex-1 line-clamp-3">
                     {drink.desc}
                   </p>
                 </motion.div>
@@ -222,7 +222,7 @@ export default function SignatureDrinksSection() {
                 <div className={`absolute inset-0 bg-gradient-to-br ${selectedDrink.colorClass} opacity-30 mix-blend-overlay`} />
                 <button 
                   onClick={() => setSelectedDrink(null)}
-                  className="absolute top-4 right-4 bg-ink-dark/50 p-2 rounded-full backdrop-blur-md text-cream hover:text-gold-warm border border-white/10 hover:border-gold/30 transition-all z-50"
+                  className="absolute top-4 right-4 bg-ink-dark/50 p-2 rounded-full backdrop-blur-md text-cream hover:text-gold-warm border border-cream/10 hover:border-gold/30 transition-all z-50"
                 >
                   <X size={20} />
                 </button>
@@ -232,8 +232,8 @@ export default function SignatureDrinksSection() {
                   <div className={`w-16 h-16 flex items-center justify-center rounded-full bg-ink-dark border ${selectedDrink.borderClass} ${selectedDrink.textClass} shadow-2xl backdrop-blur-md`}>
                     <selectedDrink.icon size={28} strokeWidth={1.5} />
                   </div>
-                  <div className="px-4 py-2 border border-white/10 bg-ink-dark/50 backdrop-blur-md rounded-full">
-                    <span className="text-[10px] md:text-xs uppercase tracking-widest text-cream/80 font-mono">
+                  <div className="px-4 py-2 border border-cream/10 bg-ink-dark/50 backdrop-blur-md rounded-full">
+                    <span className="text-base md:text-base uppercase tracking-wider text-cream font-mono">
                       Served in {selectedDrink.cup}
                     </span>
                   </div>
@@ -242,20 +242,20 @@ export default function SignatureDrinksSection() {
                 <motion.h3 layoutId={`title-${selectedDrink.name}`} className="display text-3xl md:text-5xl mb-3 text-cream">
                   {selectedDrink.name}
                 </motion.h3>
-                <p className={`text-sm md:text-base tracking-widest uppercase font-medium ${selectedDrink.textClass} mb-6`}>
+                <p className={`text-base md:text-base tracking-wider uppercase font-medium ${selectedDrink.textClass} mb-6`}>
                   {selectedDrink.tagline}
                 </p>
                 
                 <hr className={`border-t ${selectedDrink.borderClass} my-6 opacity-30`} />
                 
-                <p className="text-cream/80 text-lg md:text-xl font-light leading-relaxed mb-8">
+                <p className="text-cream text-lg md:text-xl font-medium leading-relaxed mb-8">
                   {selectedDrink.desc}
                 </p>
 
                 <div className="flex justify-between items-center mt-4">
                    <button 
                       onClick={() => setSelectedDrink(null)}
-                      className="px-4 py-2 text-cream/50 hover:text-white transition-colors text-[10px] uppercase tracking-widest"
+                      className="px-4 py-2 text-cream hover:text-cream transition-colors text-base uppercase tracking-wider"
                    >
                      Close
                    </button>
@@ -264,7 +264,7 @@ export default function SignatureDrinksSection() {
                         navigate('/contact', { state: { inquiryDrink: selectedDrink.name } });
                         setSelectedDrink(null);
                       }}
-                      className="px-6 py-3 bg-gold/10 text-gold-warm hover:bg-gold/20 border border-gold/30 rounded-full transition-all text-xs uppercase tracking-widest flex items-center gap-2"
+                      className="px-6 py-3 bg-gold/10 text-gold-warm hover:bg-gold/20 border border-gold/30 rounded-full transition-all text-base uppercase tracking-wider flex items-center gap-2"
                    >
                      Quick Add to Inquiry <ChevronRight size={16} />
                    </button>

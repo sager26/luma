@@ -25,7 +25,7 @@
 
 @layer base {
   body {
-    @apply bg-ink text-cream font-sans font-light selection:bg-gold/30 selection:text-gold-pale;
+    @apply bg-ink text-cream font-sans font-medium selection:bg-gold/30 selection:text-gold-pale;
     line-height: 1.7;
     overflow-x: hidden;
   }
@@ -57,11 +57,11 @@
 
 @layer utilities {
   .display {
-    @apply font-serif font-light leading-[1.15];
+    @apply font-serif font-medium leading-[1.15];
   }
 
   .label-micro {
-    @apply font-sans text-[10px] uppercase tracking-[0.35em] text-gold;
+    @apply font-sans text-base uppercase tracking-[0.35em] text-gold;
   }
 
   .bg-noise {
@@ -78,6 +78,6 @@
   }
 
   .btn-luxury {
-    @apply relative overflow-hidden px-8 py-3.5 text-[11px] uppercase tracking-[0.25em] transition-all duration-500 hover:shadow-[0_0_20px_0_rgba(226,184,89,0.3)];
+    @apply relative overflow-hidden px-8 py-3.5 text-base uppercase tracking-[0.25em] transition-all duration-500 hover:shadow-[0_0_20px_0_rgba(226,184,89,0.3)];
   }
 }

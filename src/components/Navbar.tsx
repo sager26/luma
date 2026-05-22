@@ -54,7 +54,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link to="/" className="flex items-center group" aria-label="Luma Mocktail Bar Home">
             <svg viewBox="0 0 400 120" className="w-[100px] md:w-[120px] h-auto fill-cream transition-colors group-hover:fill-gold-warm" role="img" aria-label="Luma Mocktail Bar logo">
-              <text x="0" y="80" className="font-serif text-[72px] font-light tracking-[8px]">LUMA</text>
+              <text x="0" y="80" className="font-serif text-[72px] font-medium tracking-[8px]">LUMA</text>
             </svg>
           </Link>
 
@@ -63,8 +63,8 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 to={link.path}
-                className={`text-[11px] uppercase tracking-[0.22em] transition-colors hover:text-gold-warm ${
-                  location.pathname === link.path ? 'text-gold-warm' : 'text-cream/70'
+                className={`text-base uppercase tracking-[0.22em] transition-colors hover:text-gold-warm ${
+                  location.pathname === link.path ? 'text-gold-warm' : 'text-cream'
                 }`}
               >
                 {link.name}
@@ -73,31 +73,31 @@ export default function Navbar() {
             
             <button
               onClick={() => setIsSearchOpen(true)}
-              className="text-cream/70 hover:text-gold-warm transition-colors"
+              className="text-cream hover:text-gold-warm transition-colors"
             >
               <Search className="w-5 h-5" />
             </button>
 
-            <div className="flex items-center gap-2 border-l border-white/10 pl-8 ml-2">
+            <div className="flex items-center gap-2 border-l border-cream/10 pl-8 ml-2">
               <button
                 onClick={() => setLanguage(language === 'EN' ? 'AR' : 'EN')}
-                className="flex items-center gap-2 text-[11px] font-mono tracking-widest text-cream/70 hover:text-gold-warm transition-colors"
+                className="flex items-center gap-2 text-base font-mono tracking-wider text-cream hover:text-gold-warm transition-colors"
               >
                 <span className={language === 'EN' ? 'text-gold-warm font-medium' : ''}>EN</span>
                 <span className="opacity-30">/</span>
-                <span className={language === 'AR' ? 'text-gold-warm font-medium font-sans text-sm' : 'font-sans text-sm'}>عربي</span>
+                <span className={language === 'AR' ? 'text-gold-warm font-medium font-sans text-base' : 'font-sans text-base'}>عربي</span>
               </button>
             </div>
 
             <BookingButton 
-              text="Book Now"
+              text="Reserve Date"
             />
           </div>
 
           <div className="flex items-center gap-4">
             <button
               onClick={() => setIsSearchOpen(true)}
-              className="md:hidden text-cream/70 hover:text-gold-warm transition-colors p-2"
+              className="md:hidden text-cream hover:text-gold-warm transition-colors p-2"
             >
               <Search className="w-5 h-5" />
             </button>
@@ -122,7 +122,7 @@ export default function Navbar() {
             className="fixed inset-0 z-[110] bg-ink-dark/98 flex flex-col items-center justify-center gap-8"
           >
             <button 
-              className="absolute top-6 right-6 text-cream/60 hover:text-cream p-2"
+              className="absolute top-6 right-6 text-cream hover:text-cream p-2"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               <X className="w-8 h-8" />
@@ -131,7 +131,7 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 to={link.path}
-                className="font-serif text-3xl font-light tracking-[0.1em] hover:text-gold-warm transition-colors"
+                className="font-serif text-3xl font-medium tracking-[0.1em] hover:text-gold-warm transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.name}
@@ -140,7 +140,7 @@ export default function Navbar() {
 
             <button
               onClick={() => setLanguage(language === 'EN' ? 'AR' : 'EN')}
-              className="mt-6 flex items-center gap-3 text-lg font-mono tracking-widest text-cream/70 hover:text-gold-warm transition-colors"
+              className="mt-6 flex items-center gap-3 text-lg font-mono tracking-wider text-cream hover:text-gold-warm transition-colors"
             >
               <span className={language === 'EN' ? 'text-gold-warm font-medium' : ''}>EN</span>
               <span className="opacity-30">|</span>
@@ -148,7 +148,7 @@ export default function Navbar() {
             </button>
 
             <BookingButton 
-              text="Book Now"
+              text="Reserve Date"
               className="mt-4 w-full max-w-[200px]"
             />
           </motion.div>

@@ -91,8 +91,8 @@ function PackageCard({
       />
 
       {featured && (
-        <div className="absolute top-6 -right-10 rotate-[35deg] bg-gradient-to-r from-gold to-gold-warm text-ink text-[10px] font-bold tracking-[0.2em] uppercase py-1 px-12 z-20 shadow-lg">
-          Standard
+        <div className="absolute top-6 -right-12 rotate-[35deg] bg-gradient-to-r from-gold to-gold-warm text-ink text-sm font-bold tracking-[0.2em] uppercase py-1 px-14 z-20 shadow-lg">
+          Most Requested
         </div>
       )}
 
@@ -101,7 +101,7 @@ function PackageCard({
         <div className="max-w-2xl">
           <div className="label-micro mb-4">{tier}</div>
           <h2 className="display text-4xl md:text-5xl mb-4 italic text-gold-warm">{name}</h2>
-          <p className="text-sm text-cream/70 leading-relaxed font-light">{tagline}</p>
+          <p className="text-base text-cream leading-relaxed font-medium">{tagline}</p>
         </div>
       </div>
 
@@ -110,7 +110,7 @@ function PackageCard({
           className="transition-transform duration-200 ease-out will-change-transform"
           style={{ transform: 'translate3d(var(--px, 0px), var(--py, 0px), 0)' }}
         >
-          <div className="label-micro text-gold/60 mb-6 block">What's Included</div>
+          <div className="label-micro text-gold mb-6 block">What's Included</div>
           <ul className="space-y-4">
             {features.map((f: string, i: number) => (
               <motion.li 
@@ -119,10 +119,10 @@ function PackageCard({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: delay + 0.5 + (i * 0.1), duration: 0.5 }}
-                className="text-sm text-cream/80 flex items-start gap-3 leading-relaxed"
+                className="text-base text-cream flex items-start gap-3 leading-relaxed"
               >
-                <span className="text-gold text-[10px] mt-1.5">✦</span>
-                <span className="font-light">{f}</span>
+                <span className="text-gold text-base mt-1.5">✦</span>
+                <span className="font-medium">{f}</span>
               </motion.li>
             ))}
           </ul>
@@ -132,20 +132,20 @@ function PackageCard({
           <div className="absolute right-0 top-1/2 -translate-y-1/2 text-gold/5 text-8xl font-serif select-none pointer-events-none group-hover:scale-110 transition-transform duration-1000">✦</div>
           <div className="p-8 border border-gold/5 rounded bg-gold/5 relative overflow-hidden group/menu">
             <div className="label-micro text-gold-warm mb-3">Please Note</div>
-            <p className="font-serif italic text-lg text-cream/80 leading-relaxed">{note}</p>
+            <p className="font-serif italic text-lg text-cream leading-relaxed">{note}</p>
           </div>
         </div>
       </div>
 
       <div className="relative z-10 px-8 md:px-12 py-6 bg-ink-dark/30 flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-gold/10 backdrop-blur-sm">
-        <p className="text-[10px] uppercase tracking-[0.2em] text-cream/40">
+        <p className="text-base uppercase tracking-[0.2em] text-cream">
           Personalised experiences
         </p>
         <a 
           href={`https://wa.me/962792324444?text=Hi, I'm interested in the ${name}.`}
           target="_blank"
           rel="noopener noreferrer"
-          className="btn-luxury bg-gold text-ink font-bold w-full sm:w-auto text-center"
+          className="btn-luxury bg-gradient-to-r from-gold to-gold-warm text-ink font-semibold w-full sm:w-auto text-center rounded-sm shadow-[0_4px_20px_rgba(201,162,58,0.2)] hover:shadow-[0_4px_30px_rgba(201,162,58,0.5)] transform hover:-translate-y-0.5 transition-all duration-500"
         >
           {ctaText}
         </a>
@@ -156,8 +156,8 @@ function PackageCard({
 
 function SkeletonPackageCard() {
   return (
-    <div className="relative bg-ink-card/30 border border-white/5 rounded-lg overflow-hidden animate-pulse">
-      <div className="relative z-10 p-8 md:p-12 border-b border-white/5 flex flex-col gap-4">
+    <div className="relative bg-ink-card/30 border border-cream/5 rounded-lg overflow-hidden animate-pulse">
+      <div className="relative z-10 p-8 md:p-12 border-b border-cream/5 flex flex-col gap-4">
         <div className="w-20 h-4 bg-ink-base/80 rounded mb-4" />
         <div className="w-2/3 h-12 md:h-14 bg-ink-base/80 rounded mb-4" />
         <div className="w-full h-4 bg-ink-base/60 rounded" />
@@ -177,7 +177,7 @@ function SkeletonPackageCard() {
           </ul>
         </div>
         <div className="relative flex flex-col justify-center">
-          <div className="p-8 border border-white/5 rounded bg-ink-base/30 relative overflow-hidden">
+          <div className="p-8 border border-cream/5 rounded bg-ink-base/30 relative overflow-hidden">
             <div className="w-24 h-4 bg-ink-base/80 rounded mb-4" />
             <div className="w-full h-4 bg-ink-base/60 rounded mb-3" />
             <div className="w-4/5 h-4 bg-ink-base/60 rounded" />
@@ -185,9 +185,9 @@ function SkeletonPackageCard() {
         </div>
       </div>
 
-      <div className="relative z-10 px-8 md:px-12 py-6 bg-ink-base/20 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div className="relative z-10 px-8 md:px-12 py-6 bg-ink-base/20 border-t border-cream/5 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div className="w-40 h-3 bg-ink-base/80 rounded" />
-        <div className="w-full sm:w-48 h-12 bg-ink-base border border-white/5 rounded" />
+        <div className="w-full sm:w-48 h-12 bg-ink-base border border-cream/5 rounded" />
       </div>
     </div>
   );
@@ -271,12 +271,12 @@ export default function Packages() {
       </Helmet>
       <section className="text-center px-6 mb-24">
         <div className="header-line mx-auto w-px h-16 bg-gradient-to-b from-transparent via-gold to-transparent mb-8 opacity-40" />
-        <span className="label-micro block mb-4">Our Services</span>
+        <span className="label-micro block mb-4">Curated Ensembles</span>
         <h1 className="display text-5xl md:text-7xl mb-8">
-          Personalised <em className="text-gold-warm italic underline underline-offset-8 decoration-gold/20">experiences.</em>
+          Exceptional <em className="text-gold-warm italic font-serif underline underline-offset-8 decoration-gold/20">curations.</em>
         </h1>
-        <p className="text-cream/50 text-sm max-w-xl mx-auto leading-relaxed">
-          Every event is unique. Choose from our standard offering or let us design a fully bespoke bar experience perfectly matched to your occasion.
+        <p className="text-cream text-base max-w-xl mx-auto leading-relaxed">
+          Every occasion deserves uncompromising quality. Select from our signature collections or commission a strictly bespoke bar experience designed specifically for you. Availability for peak seasons is strictly limited.
         </p>
       </section>
 
@@ -290,14 +290,14 @@ export default function Packages() {
           ) : (
             <>
               <PackageCard 
-                tier="Main Package"
-                name="Signature Package"
-                tagline="An elevated standard. A sophisticated mocktail bar experience designed to integrate seamlessly into your event."
+                tier="Signature Collection"
+                name="The Heritage Selection"
+                tagline="An uncompromising standard. A sophisticated mocktail bar experience designed to elevate the ambiance of your event seamlessly."
                 features={[
-                  "4 signature mocktails crafted for your event",
-                  "Elegant barware, botanicals & garnishes (note: crystal glassware is Bespoke only)",
-                  "Full bar setup & breakdown within Amman",
-                  "Pre-event consultation & menu approval",
+                  "4 masterpiece botanical mocktails curated by our mixologists",
+                  "Elegant barware, exotic garnishes & premium clear ice",
+                  "White-glove bar setup & breakdown within Amman",
+                  "Dedicated pre-event consultation & private menu tasting",
                   "Complimentary tasting session",
                   "100% alcohol-free & halal, every ingredient, always"
                 ]}
@@ -308,16 +308,16 @@ export default function Packages() {
               />
 
               <PackageCard 
-                tier="Bespoke Package"
-                name="Bespoke Bar"
-                tagline="For events requiring a fully custom experience: extended service, exclusive ingredient sourcing, branded bar activations, and corporate programmes."
+                tier="The Supreme Collection"
+                name="The Master Bespoke Commission"
+                tagline="For events requiring absolute distinction: extended orchestration, exclusive rare ingredient sourcing, lavish branded bar architectures, and elite corporate programmes."
                 features={[
-                  "Full crystal glassware selection",
-                  "Fully bespoke mocktail menu design",
-                  "Branded bar & custom interactive activations",
-                  "Extended and multi-session service capability"
+                  "Complete master crystal glassware selection",
+                  "Vanguard bespoke mocktail menu design crafted just for you",
+                  "Immersive branded bar & interactive luxury activations",
+                  "Unrestricted, multi-session service capability"
                 ]}
-                note="Our most exclusive offering for demanding events. We work closely with you or your planners to craft an unmatched beverage experience."
+                note="Our absolute highest tier offering for the most demanding events. We integrate directly with you or your event planners to craft an unmatched, monumental beverage experience."
                 featured={false}
                 ctaText="Start the Conversation"
                 delay={0.2}
@@ -331,7 +331,7 @@ export default function Packages() {
           <div className="text-center mb-16 px-6">
             <span className="label-micro block mb-4 text-gold">Enhancements</span>
             <h2 className="display text-4xl md:text-6xl mb-6">Add-Ons</h2>
-            <p className="text-cream/50 text-sm max-w-lg mx-auto font-light leading-relaxed">
+            <p className="text-cream text-base max-w-lg mx-auto font-medium leading-relaxed">
               Available across our packages. Mention what catches your eye when you enquire, and we'll integrate it into your bespoke quote.
             </p>
           </div>
@@ -372,9 +372,9 @@ export default function Packages() {
               >
                 <div>
                   <h3 className="display text-xl mb-3 text-gold-warm group-hover:tracking-wider transition-all duration-500">{a.title}</h3>
-                  <p className="text-[10px] text-cream/60 leading-relaxed uppercase tracking-widest font-light">{a.desc}</p>
+                  <p className="text-base text-cream leading-relaxed uppercase tracking-wider font-medium">{a.desc}</p>
                 </div>
-                <div className="mt-6 text-[9px] uppercase tracking-widest text-gold/40 border-t border-gold/5 pt-4 group-hover:text-gold transition-colors block shrink-0">Ask Us &rsaquo;</div>
+                <div className="mt-6 text-base uppercase tracking-wider text-gold border-t border-gold/5 pt-4 group-hover:text-gold transition-colors block shrink-0">Ask Us &rsaquo;</div>
               </motion.a>
             ))}
           </motion.div>
@@ -404,9 +404,9 @@ export default function Packages() {
             <div className="flex justify-center relative z-10">
               <a 
                 href="/contact" 
-                className="btn-luxury border border-gold/50 text-gold hover:bg-gold/10 backdrop-blur-sm transition-all text-center px-12 py-4"
+                className="btn-luxury bg-gradient-to-r from-gold to-gold-warm text-ink font-semibold transition-all duration-500 text-center px-12 py-4 rounded-sm shadow-[0_4px_20px_rgba(201,162,58,0.2)] hover:shadow-[0_4px_30px_rgba(201,162,58,0.5)] transform hover:-translate-y-0.5"
               >
-                Contact Us
+                Speak to our Concierge
               </a>
             </div>
           </div>
@@ -425,8 +425,8 @@ function FAQItem({ question, answer }: { question: string, answer: string }) {
         onClick={() => setIsOpen(!isOpen)} 
         className="w-full py-6 flex items-center justify-between gap-4 text-left group"
       >
-        <span className="font-serif text-lg text-cream/90 group-hover:text-gold-warm transition-colors">{question}</span>
-        <ChevronDown className={`w-5 h-5 text-gold/50 transition-transform duration-300 shrink-0 ${isOpen ? 'rotate-180 text-gold-warm' : ''}`} />
+        <span className="font-serif text-lg text-cream group-hover:text-gold-warm transition-colors">{question}</span>
+        <ChevronDown className={`w-5 h-5 text-gold transition-transform duration-300 shrink-0 ${isOpen ? 'rotate-180 text-gold-warm' : ''}`} />
       </button>
       <AnimatePresence>
         {isOpen && (
@@ -436,7 +436,7 @@ function FAQItem({ question, answer }: { question: string, answer: string }) {
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
           >
-            <p className="pb-6 text-sm text-cream/60 font-light leading-relaxed">
+            <p className="pb-6 text-base text-cream font-medium leading-relaxed">
               {answer}
             </p>
           </motion.div>

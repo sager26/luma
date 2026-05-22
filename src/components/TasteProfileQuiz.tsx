@@ -75,7 +75,7 @@ export default function TasteProfileQuiz() {
           <div className="w-16 h-16 rounded-full border border-gold/30 bg-gold/5 flex items-center justify-center text-gold group-hover:scale-110 group-hover:bg-gold/10 transition-all duration-500 shadow-[0_0_30px_rgba(201,162,58,0.1)] group-hover:shadow-[0_0_50px_rgba(201,162,58,0.2)]">
             <Sparkles className="w-6 h-6" />
           </div>
-          <span className="text-[10px] uppercase tracking-[0.3em] text-cream/70 group-hover:text-gold transition-colors">
+          <span className="text-base uppercase tracking-[0.3em] text-cream group-hover:text-gold transition-colors">
             Find Your Signature Serve
           </span>
         </button>
@@ -97,7 +97,7 @@ export default function TasteProfileQuiz() {
             >
               <button 
                 onClick={() => setIsOpen(false)}
-                className="absolute top-6 right-6 text-cream/40 hover:text-gold transition-colors"
+                className="absolute top-6 right-6 text-cream hover:text-gold transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -123,7 +123,7 @@ export default function TasteProfileQuiz() {
                            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                            className="w-12 h-12 rounded-full border-t-2 border-r-2 border-gold border-b-2 border-l-2 border-b-transparent border-l-transparent"
                          />
-                         <div className="text-[11px] uppercase tracking-widest text-gold/60">
+                         <div className="text-base uppercase tracking-wider text-gold">
                            Crafting your profile...
                          </div>
                       </motion.div>
@@ -138,12 +138,12 @@ export default function TasteProfileQuiz() {
                            <Sparkles className="w-8 h-8" />
                         </div>
                         <h4 className="display text-3xl text-gold-warm mb-4">{result.name}</h4>
-                        <p className="text-sm font-light text-cream/80 leading-relaxed mb-8">
+                        <p className="text-base font-medium text-cream leading-relaxed mb-8">
                           {result.desc}
                         </p>
                         <button 
                           onClick={reset}
-                          className="text-[10px] uppercase tracking-widest text-cream/40 hover:text-gold transition-colors underline underline-offset-4"
+                          className="text-base uppercase tracking-wider text-cream hover:text-gold transition-colors underline underline-offset-4"
                         >
                           Start Over
                         </button>
@@ -155,7 +155,7 @@ export default function TasteProfileQuiz() {
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -20 }}
                       >
-                        <h4 className="text-lg text-cream/90 mb-6 text-center font-light">
+                        <h4 className="text-lg text-cream mb-6 text-center font-medium">
                           {questions[step].title}
                         </h4>
                         <div className="grid grid-cols-1 gap-3">
@@ -163,13 +163,13 @@ export default function TasteProfileQuiz() {
                             <button
                               key={i}
                               onClick={() => handleSelect(opt.value)}
-                              className="w-full text-left p-4 border border-white/10 rounded-lg hover:bg-gold/5 hover:border-gold/30 transition-all flex items-center justify-between group"
+                              className="w-full text-left p-4 border border-cream/10 rounded-lg hover:bg-gold/5 hover:border-gold/30 transition-all flex items-center justify-between group"
                             >
                                <div className="flex items-center gap-4">
-                                  {opt.icon && <span className="text-gold/60 group-hover:text-gold transition-colors">{opt.icon}</span>}
-                                  <span className="text-sm text-cream/80 group-hover:text-gold transition-colors">{opt.label}</span>
+                                  {opt.icon && <span className="text-gold group-hover:text-gold transition-colors">{opt.icon}</span>}
+                                  <span className="text-base text-cream group-hover:text-gold transition-colors">{opt.label}</span>
                                </div>
-                              <ChevronRight className="w-4 h-4 text-cream/20 group-hover:text-gold transition-colors" />
+                              <ChevronRight className="w-4 h-4 text-cream group-hover:text-gold transition-colors" />
                             </button>
                           ))}
                         </div>
@@ -181,7 +181,7 @@ export default function TasteProfileQuiz() {
                 {!isAnalyzing && !result && (
                    <div className="mt-8 flex gap-2 justify-center">
                      {questions.map((_, i) => (
-                        <div key={i} className={`w-1.5 h-1.5 rounded-full transition-colors ${i === step ? 'bg-gold' : 'bg-white/10'}`} />
+                        <div key={i} className={`w-1.5 h-1.5 rounded-full transition-colors ${i === step ? 'bg-gold' : 'bg-cream/10'}`} />
                      ))}
                    </div>
                 )}

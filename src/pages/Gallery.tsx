@@ -68,8 +68,8 @@ function MagneticGalleryTile({ image, caption, className = "" }: any) {
       
       {/* Content */}
       <div className="absolute inset-0 p-8 flex flex-col justify-end translate-y-6 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
-        <div className="text-[10px] uppercase tracking-[0.4em] text-gold mb-2">Luma Ritual</div>
-        <div className="text-sm text-cream/90 font-light">{caption}</div>
+        <div className="text-base uppercase tracking-[0.4em] text-gold mb-2">Luma Ritual</div>
+        <div className="text-base text-cream font-medium">{caption}</div>
       </div>
     </motion.div>
   );
@@ -103,7 +103,7 @@ export default function Gallery() {
         <h1 className="display text-5xl md:text-7xl mb-8">
           Atmospheric <em className="text-gold-warm italic underline underline-offset-8 decoration-gold/20">Concepts</em>
         </h1>
-        <p className="text-cream/50 text-sm max-w-xl mx-auto leading-relaxed">
+        <p className="text-cream text-base max-w-xl mx-auto leading-relaxed">
           Each drink is a composition. Each setup, an installation. A glimpse into the Luma aesthetic with our Luma Ritual gallery.
         </p>
       </section>

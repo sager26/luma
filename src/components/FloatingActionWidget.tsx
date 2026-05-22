@@ -53,8 +53,8 @@ export default function FloatingActionWidget() {
             <MessageCircle className="w-6 h-6 fill-ink-dark/20" />
             
             {/* Tooltip */}
-            <div className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-ink-dark/90 border border-gold/20 text-cream text-[10px] uppercase tracking-widest rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none backdrop-blur-sm">
-              Chat with us
+            <div className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-ink-dark/90 border border-gold/20 text-cream text-base uppercase tracking-wider rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none backdrop-blur-sm">
+              Personal Concierge
             </div>
           </motion.a>
         </motion.div>

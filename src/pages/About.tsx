@@ -30,10 +30,10 @@ export default function About() {
           <h1 className="display text-5xl md:text-7xl mb-6">
             Our <em className="text-gold-warm italic">Story</em>
           </h1>
-          <p className="text-cream/50 text-sm max-w-lg mx-auto leading-relaxed">
+          <p className="text-cream text-base max-w-lg mx-auto leading-relaxed">
             Amman's first premium alcohol-free mobile mocktail bar, redefined for private occasions where elegance is the priority.
           </p>
-          <div className="mt-8 inline-block px-6 py-2 border border-gold/30 rounded-full text-gold-warm text-[10px] tracking-widest uppercase bg-gold/5">
+          <div className="mt-8 inline-block px-6 py-2 border border-gold/30 rounded-full text-gold-warm text-base tracking-wider uppercase bg-gold/5">
             100% Alcohol-Free
           </div>
         </div>
@@ -68,7 +68,7 @@ export default function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1, delay: 0.3 }}
-            className="flex flex-col gap-8 text-cream/60 leading-relaxed font-light text-sm"
+            className="flex flex-col gap-8 text-cream leading-relaxed font-medium text-base"
           >
             <p>
               Luma was born from a simple idea: that non-alcoholic drinks deserve the same craft, care, and presentation as any fine cocktail. In Amman's event market, we saw a gap between expensive, inflexible hotel services and unprofessional budget operators.
@@ -114,10 +114,10 @@ export default function About() {
                 className="flex flex-col gap-4 text-center items-center"
               >
                 <div className="w-12 h-12 rounded-full border border-gold/20 flex items-center justify-center text-gold mb-2">
-                  <span className="text-sm">0{i + 1}</span>
+                  <span className="text-base">0{i + 1}</span>
                 </div>
                 <h3 className="display text-2xl text-gold-warm">{value.title}</h3>
-                <p className="text-cream/50 text-sm leading-relaxed font-light">
+                <p className="text-cream text-base leading-relaxed font-medium">
                   {value.desc}
                 </p>
               </motion.div>
@@ -151,9 +151,28 @@ export default function About() {
               >
                 <div className="text-gold text-3xl mb-4 group-hover:rotate-180 transition-transform duration-700">{s.icon}</div>
                 <h3 className="display text-xl mb-4 text-gold-warm">{s.title}</h3>
-                <p className="text-[11px] text-cream/40 leading-relaxed uppercase tracking-wider">{s.desc}</p>
+                <p className="text-base text-cream leading-relaxed uppercase tracking-wider">{s.desc}</p>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Global CTA */}
+      <section className="mt-32 mb-16 text-center px-6">
+        <div className="max-w-4xl mx-auto p-12 md:p-24 border border-gold/10 bg-ink-dark/30 rounded-lg relative overflow-hidden group">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(201,162,58,0.1)_0,transparent_50%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+          <span className="label-micro block mb-6 text-gold relative z-10">Commission Our Services</span>
+          <h2 className="display text-4xl md:text-5xl mb-8 relative z-10">
+            Secure Your <em className="text-gold-warm italic">Date</em>
+          </h2>
+          <div className="flex justify-center relative z-10">
+            <a 
+              href="/contact" 
+              className="btn-luxury bg-gradient-to-r from-gold to-gold-warm text-ink font-semibold transition-all duration-500 text-center px-12 py-4 rounded-sm shadow-[0_4px_20px_rgba(201,162,58,0.2)] hover:shadow-[0_4px_30px_rgba(201,162,58,0.5)] transform hover:-translate-y-0.5"
+            >
+              Consult with our Architects
+            </a>
           </div>
         </div>
       </section>

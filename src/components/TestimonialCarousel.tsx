@@ -35,10 +35,10 @@ export default function TestimonialCarousel() {
 
   return (
     <section className="py-32 px-6 relative z-10 overflow-hidden">
-      <div className="absolute inset-0 bg-ink-dark/50 border-y border-white/5" />
+      <div className="absolute inset-0 bg-ink-dark/50 border-y border-cream/5" />
       <div className="max-w-4xl mx-auto relative z-10 text-center">
         <div className="flex justify-center mb-12">
-          <Quote className="w-12 h-12 text-gold/20" />
+          <Quote className="w-12 h-12 text-gold" />
         </div>
         
         <div className="min-h-[250px] flex flex-col items-center justify-center">
@@ -51,14 +51,14 @@ export default function TestimonialCarousel() {
               transition={{ duration: 0.7, ease: "easeInOut" }}
               className="flex flex-col items-center justify-center"
             >
-              <p className="text-xl md:text-2xl lg:text-3xl font-light text-cream/90 leading-relaxed max-w-3xl mb-10">
+              <p className="text-xl md:text-3xl lg:text-4xl font-serif text-cream italic drop-shadow-sm leading-relaxed max-w-3xl mb-10">
                 "{testimonials[index].text}"
               </p>
               <div className="flex flex-col items-center gap-2">
-                <span className="text-gold-warm font-medium tracking-widest uppercase text-sm">
+                <span className="text-gold-warm font-medium tracking-wider uppercase text-base">
                   {testimonials[index].author}
                 </span>
-                <span className="text-cream/40 text-xs uppercase tracking-widest">
+                <span className="text-cream text-base uppercase tracking-wider">
                   {testimonials[index].role}
                 </span>
               </div>
@@ -72,7 +72,7 @@ export default function TestimonialCarousel() {
               key={i}
               onClick={() => setIndex(i)}
               className={`w-2.5 h-2.5 rounded-full transition-all duration-500 ${
-                i === index ? 'bg-gold w-8' : 'bg-white/10 hover:bg-white/30'
+                i === index ? 'bg-gold w-8' : 'bg-cream/10 hover:bg-cream/30'
               }`}
               aria-label={`Go to testimonial ${i + 1}`}
             />

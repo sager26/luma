@@ -84,11 +84,11 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean; onCl
               
               {/* Mobile Swipe-to-Dismiss Handle */}
               <div className="md:hidden flex justify-center pt-3 pb-1 w-full cursor-grab">
-                <div className="w-12 h-1 rounded-full bg-white/20" />
+                <div className="w-12 h-1 rounded-full bg-cream/20" />
               </div>
 
               {/* Search Header */}
-              <div className="flex items-center gap-4 p-4 border-b border-white/5">
+              <div className="flex items-center gap-4 p-4 border-b border-cream/5">
                 <Search className="w-6 h-6 text-gold" />
                 <input
                   ref={inputRef}
@@ -96,11 +96,11 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean; onCl
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Search mocktails, packages..."
-                  className="flex-1 bg-transparent border-none outline-none text-cream text-lg font-light placeholder:text-cream/30"
+                  className="flex-1 bg-transparent border-none outline-none text-cream text-lg font-medium placeholder:text-cream"
                 />
                 <button 
                   onClick={onClose}
-                  className="p-2 text-cream/50 hover:text-cream transition-colors rounded-full hover:bg-white/5"
+                  className="p-2 text-cream hover:text-cream transition-colors rounded-full hover:bg-cream/5"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -112,7 +112,7 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean; onCl
                 onPointerDownCapture={(e) => e.stopPropagation()}
               >
                 {query.trim() !== '' && filteredResults.length === 0 && (
-                  <div className="p-8 text-center text-cream/50 font-light">
+                  <div className="p-8 text-center text-cream font-medium">
                     No results found for "{query}".
                   </div>
                 )}
@@ -126,18 +126,18 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean; onCl
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: idx * 0.05 }}
-                        className="w-full text-left flex items-center justify-between p-4 rounded-lg hover:bg-white/5 transition-colors group"
+                        className="w-full text-left flex items-center justify-between p-4 rounded-lg hover:bg-cream/5 transition-colors group"
                       >
                         <div>
                           <div className="flex items-center gap-3 mb-1">
                             <span className="font-serif text-lg text-cream group-hover:text-gold-warm transition-colors">{result.title}</span>
-                            <span className="text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-full border border-gold/30 text-gold bg-gold/5">
+                            <span className="text-base uppercase tracking-wider px-2 py-0.5 rounded-full border border-gold/30 text-gold bg-gold/5">
                               {result.category}
                             </span>
                           </div>
-                          <p className="text-sm font-light text-cream/50 line-clamp-1">{result.description}</p>
+                          <p className="text-base font-medium text-cream line-clamp-1">{result.description}</p>
                         </div>
-                        <ChevronRight className="w-5 h-5 text-cream/20 group-hover:text-gold transition-colors" />
+                        <ChevronRight className="w-5 h-5 text-cream group-hover:text-gold transition-colors" />
                       </motion.button>
                     ))}
                   </div>
@@ -145,13 +145,13 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean; onCl
                 
                 {query.trim() === '' && (
                   <div className="p-6">
-                    <p className="text-xs uppercase tracking-[0.2em] text-cream/30 mb-4 px-2">Popular Searches</p>
+                    <p className="text-base uppercase tracking-[0.2em] text-cream mb-4 px-2">Popular Searches</p>
                     <div className="flex flex-wrap gap-2">
                       {["Botanical Bliss", "Wedding Packages", "Smoked Ruby"].map((tag) => (
                         <button
                           key={tag}
                           onClick={() => setQuery(tag)}
-                          className="px-4 py-2 rounded-full border border-white/10 text-cream/70 text-sm hover:border-gold/30 hover:text-gold-warm transition-colors"
+                          className="px-4 py-2 rounded-full border border-cream/10 text-cream text-base hover:border-gold/30 hover:text-gold-warm transition-colors"
                         >
                           {tag}
                         </button>

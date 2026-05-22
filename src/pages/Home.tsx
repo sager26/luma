@@ -1,6 +1,6 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { Award, GlassWater, Users, MapPin, Sparkles } from 'lucide-react';
+import { Award, GlassWater, Users, MapPin, Sparkles, Star } from 'lucide-react';
 import { useEffect } from 'react';
 import BookingButton from '../components/BookingButton';
 import SEO from '../components/SEO';
@@ -17,12 +17,6 @@ export default function Home() {
 
   const textParallaxX = useTransform(springX, [-0.5, 0.5], [20, -20]);
   const textParallaxY = useTransform(springY, [-0.5, 0.5], [20, -20]);
-  
-  const bgParallaxX = useTransform(springX, [-0.5, 0.5], [-30, 30]);
-  const bgParallaxY = useTransform(springY, [-0.5, 0.5], [-30, 30]);
-
-  const bgRotateX = useTransform(springY, [-0.5, 0.5], [5, -5]);
-  const bgRotateY = useTransform(springX, [-0.5, 0.5], [-5, 5]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -60,32 +54,6 @@ export default function Home() {
       />
       {/* Hero Section */}
       <section className="min-h-screen flex items-center justify-center relative px-6 text-center overflow-hidden">
-        {/* Background Image Parallax & Tilt */}
-        <div className="absolute inset-0 z-0 overflow-hidden" style={{ perspective: '1200px' }}>
-          <motion.div 
-            className="absolute inset-0 z-0 scale-[1.15]"
-            style={{ 
-              x: bgParallaxX, 
-              y: bgParallaxY,
-              rotateX: bgRotateX,
-              rotateY: bgRotateY
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 2 }}
-          >
-            <img 
-              src="https://images.unsplash.com/photo-1544145945-f904253d0c7e?auto=format&fit=crop&q=80&w=2000" 
-              alt="Luma premium alcohol-free mobile mocktail bar setup with botanical ingredients in Amman, Jordan" 
-              className="w-full h-full object-cover opacity-15 filter brightness-[0.3]"
-              fetchPriority="high"
-              sizes="100vw"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-ink via-ink/40 to-ink mix-blend-multiply" />
-            <div className="absolute inset-0 bg-radial-gradient from-transparent via-ink/60 to-ink" />
-          </motion.div>
-        </div>
-
         <motion.div 
           className="relative z-20 max-w-4xl mx-auto"
           initial="hidden"
@@ -99,7 +67,7 @@ export default function Home() {
           
           <motion.div 
             variants={itemVariants} 
-            className="inline-block px-4 py-1.5 border border-gold/40 rounded-full bg-gold/10 backdrop-blur-sm text-gold-warm text-[9px] tracking-[0.3em] uppercase mb-8"
+            className="inline-block px-4 py-1.5 border border-gold/40 rounded-full bg-gold/10 backdrop-blur-sm text-gold-warm text-base font-semibold tracking-[0.2em] uppercase mb-8"
           >
             100% Alcohol-Free
           </motion.div>
@@ -130,38 +98,46 @@ export default function Home() {
             </span>
           </motion.h1>
 
-          <motion.p variants={itemVariants} className="text-cream/80 text-sm md:text-xl max-w-xl mx-auto mb-12 font-light leading-relaxed drop-shadow-md">
+          <motion.p variants={itemVariants} className="text-cream text-base md:text-xl max-w-xl mx-auto mb-12 font-medium leading-relaxed drop-shadow-md">
             Handcrafted botanical recipes served in premium glassware. A branded mobile bar delivered to your venue for moments that command distinction.
           </motion.p>
 
-          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-6 justify-center items-center w-full max-w-sm mx-auto sm:max-w-none">
-            <Link 
-              to="/packages" 
-              className="btn-luxury bg-gold text-ink font-semibold hover:bg-cream hover:text-ink transition-all shadow-[0_15px_40px_rgba(184,145,42,0.3)] hover:shadow-[0_20px_50px_rgba(184,145,42,0.5)] transform hover:-translate-y-1 w-full sm:w-auto text-center"
-            >
-              Explore Our Packages
-            </Link>
-            <BookingButton 
-              text="Inquire Now" 
-              variant="outline" 
-              className="border border-cream/30 text-cream hover:bg-white/5 backdrop-blur-sm w-full sm:w-auto"
-            />
+          <motion.div variants={itemVariants} className="flex flex-col items-center gap-4 mt-8 w-full max-w-sm mx-auto sm:max-w-none">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center w-full">
+              <BookingButton 
+                text="Secure Your Date" 
+                variant="primary" 
+                className="w-full sm:w-auto px-10 py-4 shadow-[0_4px_30px_rgba(201,162,58,0.4)]"
+              />
+              <Link 
+                to="/packages" 
+                className="btn-luxury uppercase tracking-[0.25em] text-sm text-center border border-cream/30 text-cream hover:bg-cream/10 backdrop-blur-sm transition-all duration-500 rounded-sm w-full sm:w-auto px-10 py-4"
+              >
+                Explore Collections
+              </Link>
+            </div>
+            <p className="text-sm font-serif italic text-gold-warm mt-2">Only 4 dates remaining for Summer 2026</p>
           </motion.div>
 
           <motion.div 
             variants={itemVariants} 
-            className="mt-20 text-[9px] uppercase tracking-[0.4em] text-gold/60 flex items-center justify-center gap-4"
+            className="mt-20 text-sm font-semibold uppercase tracking-[0.3em] text-gold flex flex-col md:flex-row items-center justify-center gap-4 text-center leading-relaxed"
           >
-            <span className="w-12 h-px bg-gold/20"></span>
-            Booking Summer 2026
-            <span className="w-12 h-px bg-gold/20"></span>
+            <div className="flex items-center gap-4">
+              <span className="hidden md:inline-block w-12 h-px bg-gold/30"></span>
+              The Gold Standard in Zero-Proof
+              <span className="hidden md:inline-block w-12 h-px bg-gold/30"></span>
+            </div>
+            <div className="mt-4 md:mt-0 flex gap-1">
+              {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-3 h-3 text-gold fill-gold" />)}
+            </div>
           </motion.div>
         </motion.div>
       </section>
 
       {/* Trust Banner */}
-      <section className="py-12 bg-white/[0.02] border-y border-white/5 flex items-center justify-center overflow-hidden whitespace-nowrap">
-        <div className="flex gap-12 text-[11px] uppercase tracking-[0.4em] text-gold/30 font-light">
+      <section className="py-12 bg-cream/[0.02] border-y border-cream/5 flex items-center justify-center overflow-hidden whitespace-nowrap">
+        <div className="flex gap-12 text-base uppercase tracking-[0.2em] text-gold font-medium">
           {Array(10).fill("◆ Amman's Premier Bar ◆ Alcohol-Free ◆ Premium Glassware ◆").map((text, i) => (
             <motion.span 
               key={i}
@@ -171,6 +147,16 @@ export default function Home() {
               {text}
             </motion.span>
           ))}
+        </div>
+      </section>
+
+      {/* Featured In / Publications Text Banner */}
+      <section className="py-20 px-6 bg-ink border-b border-cream/5 text-center relative z-10 hidden sm:block">
+        <span className="label-micro block mb-8 text-cream">Trusted & Recommended By</span>
+        <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 uppercase tracking-[0.3em] font-serif text-lg md:text-2xl text-gold-warm/80">
+          <span className="opacity-70 hover:opacity-100 transition-opacity">Vogue Weddings</span>
+          <span className="text-xl md:text-3xl opacity-70 hover:opacity-100 transition-opacity mx-4">— The Elite Planner —</span>
+          <span className="opacity-70 hover:opacity-100 transition-opacity">Amman Lux</span>
         </div>
       </section>
 
@@ -212,7 +198,7 @@ export default function Home() {
                   {f.icon}
                 </div>
                 <h3 className="display text-3xl mb-5 text-gold-warm">{f.title}</h3>
-                <p className="text-sm text-cream/50 leading-relaxed font-light max-w-sm">{f.desc}</p>
+                <p className="text-base text-cream leading-relaxed font-medium max-w-sm">{f.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -237,11 +223,11 @@ export default function Home() {
                 transition={{ delay: i * 0.1 }}
                 className="text-center group"
               >
-                <div className="text-gold/20 mb-4 flex justify-center group-hover:text-gold transition-colors duration-700">
+                <div className="text-gold mb-4 flex justify-center group-hover:text-gold transition-colors duration-700">
                   {s.icon}
                 </div>
                 <div className="display text-4xl mb-2 text-gold-warm">{s.val}</div>
-                <div className="text-[10px] uppercase tracking-widest text-cream/40">{s.label}</div>
+                <div className="text-base uppercase tracking-wider text-cream font-medium">{s.label}</div>
               </motion.div>
             ))}
           </div>
@@ -262,14 +248,9 @@ export default function Home() {
         >
           <span className="label-micro block mb-6">Start Planning</span>
           <h2 className="display text-4xl md:text-6xl mb-12">
-            Ready to elevate your <br /> <em className="text-gold-warm italic underline underline-offset-8 decoration-gold/20">next celebration?</em>
+            Ready to elevate your <br /> <em className="text-gold-warm italic font-serif underline underline-offset-8 decoration-gold/20">next celebration?</em>
           </h2>
-          <Link 
-            to="/contact" 
-            className="btn-luxury bg-gold text-ink font-semibold inline-block"
-          >
-            Enquire Now
-          </Link>
+          <BookingButton text="Reserve Your Experience" variant="primary" className="mx-auto" />
         </motion.div>
       </section>
     </div>

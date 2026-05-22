@@ -38,10 +38,10 @@ export default function BookingButton({
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         disabled={isLoading}
-        className={`btn-luxury flex items-center justify-center gap-2 transition-colors ${
+        className={`btn-luxury flex items-center justify-center gap-2 transition-all duration-500 rounded-sm ${
           variant === 'primary' 
-            ? 'bg-gold text-ink border border-gold hover:bg-gold-warm' 
-            : 'border border-gold/40 text-gold hover:bg-gold/10'
+            ? 'bg-gradient-to-r from-gold to-gold-warm text-ink font-semibold shadow-[0_4px_20px_rgba(201,162,58,0.2)] hover:shadow-[0_4px_30px_rgba(201,162,58,0.5)] transform hover:-translate-y-0.5' 
+            : 'border border-gold/40 text-gold hover:bg-gold/10 hover:border-gold shadow-sm hover:shadow-[0_0_15px_rgba(201,162,58,0.2)]'
         } ${isLoading ? 'opacity-80 cursor-wait' : ''} ${className}`}
       >
         <AnimatePresence mode="wait">
