@@ -1,6 +1,6 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { Award, GlassWater, Users, MapPin, Sparkles, Star } from 'lucide-react';
+import { Award, GlassWater, Users, MapPin, Sparkles } from 'lucide-react';
 import { useEffect } from 'react';
 import BookingButton from '../components/BookingButton';
 import SEO from '../components/SEO';
@@ -116,21 +116,16 @@ export default function Home() {
                 Explore Collections
               </Link>
             </div>
-            <p className="text-sm font-serif italic text-gold-warm mt-2">Only 4 dates remaining for Summer 2026</p>
+            <p className="text-sm font-serif italic text-gold-warm mt-2">Now booking Summer & Autumn 2026</p>
           </motion.div>
 
-          <motion.div 
-            variants={itemVariants} 
-            className="mt-20 text-sm font-semibold uppercase tracking-[0.3em] text-gold flex flex-col md:flex-row items-center justify-center gap-4 text-center leading-relaxed"
+          <motion.div
+            variants={itemVariants}
+            className="mt-20 text-sm font-semibold uppercase tracking-[0.3em] text-gold flex items-center justify-center gap-4 text-center leading-relaxed"
           >
-            <div className="flex items-center gap-4">
-              <span className="hidden md:inline-block w-12 h-px bg-gold/30"></span>
-              The Gold Standard in Zero-Proof
-              <span className="hidden md:inline-block w-12 h-px bg-gold/30"></span>
-            </div>
-            <div className="mt-4 md:mt-0 flex gap-1">
-              {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-3 h-3 text-gold fill-gold" />)}
-            </div>
+            <span className="hidden md:inline-block w-12 h-px bg-gold/30"></span>
+            The Gold Standard in Zero-Proof
+            <span className="hidden md:inline-block w-12 h-px bg-gold/30"></span>
           </motion.div>
         </motion.div>
       </section>
@@ -150,15 +145,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured In / Publications Text Banner */}
-      <section className="py-20 px-6 bg-ink border-b border-cream/5 text-center relative z-10 hidden sm:block">
-        <span className="label-micro block mb-8 text-cream">Trusted & Recommended By</span>
-        <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 uppercase tracking-[0.3em] font-serif text-lg md:text-2xl text-gold-warm/80">
-          <span className="opacity-70 hover:opacity-100 transition-opacity">Vogue Weddings</span>
-          <span className="text-xl md:text-3xl opacity-70 hover:opacity-100 transition-opacity mx-4">— The Elite Planner —</span>
-          <span className="opacity-70 hover:opacity-100 transition-opacity">Amman Lux</span>
-        </div>
-      </section>
 
       {/* Features Section */}
       <section className="py-40 px-6 bg-ink-dark/50 relative z-10 backdrop-blur-md border-y border-gold/5">

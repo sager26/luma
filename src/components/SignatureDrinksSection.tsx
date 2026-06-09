@@ -116,10 +116,7 @@ export default function SignatureDrinksSection() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500); // Premium deliberate loading delay
-    return () => clearTimeout(timer);
+    setIsLoading(false);
   }, []);
 
   return (

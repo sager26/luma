@@ -20,7 +20,7 @@ export default function Contact() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     const formData = new FormData(e.currentTarget);
     const name = formData.get('name') as string || '';
     const phone = formData.get('phone') as string || '';
@@ -28,13 +28,12 @@ export default function Contact() {
     const guests = formData.get('guests') as string || '';
     const message = formData.get('message') as string || '';
 
-    const subject = encodeURIComponent(`New Event Enquiry from ${name}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nPhone/WhatsApp: ${phone}\nEvent Type: ${type}\nEstimated Guests: ${guests}\n\nMessage:\n${message}`
+    const whatsappMessage = encodeURIComponent(
+      `Hi Luma, I'd like to enquire about an event.\n\nName: ${name}\nPhone: ${phone}\nEvent Type: ${type}\nEstimated Guests: ${guests}${message ? `\n\nMessage: ${message}` : ''}`
     );
 
     setTimeout(() => {
-      window.location.href = `mailto:info@lumajordan.com?subject=${subject}&body=${body}`;
+      window.open(`https://wa.me/962792324444?text=${whatsappMessage}`, '_blank');
       setSubmitted(true);
       setIsSubmitting(false);
     }, 600);
@@ -46,7 +45,7 @@ export default function Contact() {
     "mainEntity": {
       "@type": "LocalBusiness",
       "name": "Luma Mocktail Bar",
-      "image": "https://images.unsplash.com/photo-1544145945-f904253d0c7e?auto=format&fit=crop&q=80&w=1200",
+      "image": "https://lumajordan.com/IMG_5418.JPG",
       "@id": "",
       "url": "https://lumajordan.com/",
       "telephone": "+962792324444",
@@ -122,11 +121,11 @@ export default function Contact() {
           {submitted ? (
             <div className="py-20 text-center flex flex-col items-center gap-6">
               <div className="text-gold text-5xl">✦</div>
-              <h2 className="display text-4xl">Message <em className="text-gold-warm italic">Prepared</em></h2>
+              <h2 className="display text-4xl">WhatsApp <em className="text-gold-warm italic">Opened</em></h2>
               <p className="text-cream max-w-xs mx-auto text-base leading-relaxed">
-                Your email client has been opened to send your enquiry directly to us. We'll consult on the right architecture and respond promptly.
+                Your enquiry has been prepared and WhatsApp is opening. We typically respond within a few hours.
               </p>
-              <button 
+              <button
                 onClick={() => setSubmitted(false)}
                 className="mt-8 text-gold uppercase tracking-[0.2em] text-base hover:text-gold-warm transition-colors"
               >

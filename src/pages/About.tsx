@@ -167,11 +167,11 @@ export default function About() {
             Secure Your <em className="text-gold-warm italic">Date</em>
           </h2>
           <div className="flex justify-center relative z-10">
-            <a 
-              href="/contact" 
+            <a
+              href="/contact"
               className="btn-luxury bg-gradient-to-r from-gold to-gold-warm text-ink font-semibold transition-all duration-500 text-center px-12 py-4 rounded-sm shadow-[0_4px_20px_rgba(201,162,58,0.2)] hover:shadow-[0_4px_30px_rgba(201,162,58,0.5)] transform hover:-translate-y-0.5"
             >
-              Consult with our Architects
+              Book a Free Consultation
             </a>
           </div>
         </div>

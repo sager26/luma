@@ -58,7 +58,7 @@ function MagneticGalleryTile({ image, caption, className = "" }: any) {
       <img 
         src={image} 
         alt={`Luma premium non-alcoholic mobile mocktail bar catering for luxury events and weddings in Amman, Jordan - ${caption}`} 
-        className="absolute inset-0 w-full h-full object-cover filter brightness-[0.5] group-hover:brightness-[0.8] transition-all duration-700 group-hover:scale-[1.03]" 
+        className="absolute inset-0 w-full h-full object-cover filter brightness-[0.75] group-hover:brightness-[0.95] transition-all duration-700 group-hover:scale-[1.03]"
         loading="lazy"
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
