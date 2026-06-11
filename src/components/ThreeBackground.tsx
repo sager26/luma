@@ -22,16 +22,20 @@ const splined = (pts: [number, number][], divisions = 20) =>
   new THREE.SplineCurve(v2(pts)).getPoints(divisions);
 
 const PROFILES: Record<string, THREE.Vector2[]> = {
-  // Martini stays crisp: it really is a cone.
-  martini: v2([
-    [0, 0], [0.30, 0], [0.30, 0.02], [0.08, 0.04], [0.035, 0.07],
-    [0.035, 0.52], [0.07, 0.55], [0.43, 0.93], [0.43, 0.95],
-    [0.41, 0.95], [0.015, 0.58], [0, 0.58],
-  ]),
-  // Coupe gets a smooth, rounded saucer bowl.
+  // Martini: domed foot, slim stem, crisp cone bowl.
+  martini: [
+    ...v2([[0, 0], [0.30, 0]]),
+    ...splined([[0.30, 0], [0.29, 0.022], [0.18, 0.038], [0.06, 0.052]], 10),
+    ...v2([[0.028, 0.07], [0.028, 0.50]]),
+    ...splined([[0.028, 0.50], [0.05, 0.535], [0.09, 0.565]], 6),
+    ...v2([[0.43, 0.93], [0.43, 0.95], [0.415, 0.95], [0.02, 0.578], [0, 0.578]]),
+  ],
+  // Coupe: domed foot, slim stem, smooth rounded saucer bowl.
   coupe: [
-    ...v2([[0, 0], [0.30, 0], [0.30, 0.02], [0.08, 0.04], [0.035, 0.07], [0.035, 0.50]]),
-    ...splined([[0.035, 0.50], [0.10, 0.555], [0.26, 0.60], [0.37, 0.68], [0.40, 0.78]]),
+    ...v2([[0, 0], [0.30, 0]]),
+    ...splined([[0.30, 0], [0.29, 0.022], [0.18, 0.038], [0.06, 0.052]], 10),
+    ...v2([[0.028, 0.07], [0.028, 0.48]]),
+    ...splined([[0.028, 0.48], [0.10, 0.545], [0.26, 0.60], [0.37, 0.68], [0.40, 0.78]]),
     ...v2([[0.40, 0.80], [0.38, 0.80]]),
     ...splined([[0.38, 0.80], [0.345, 0.70], [0.24, 0.625], [0.09, 0.585], [0.015, 0.56]]),
     ...v2([[0, 0.56]]),
@@ -66,14 +70,15 @@ function GlassMaterial() {
   return (
     <meshPhysicalMaterial
       transmission={isMobile ? 0.85 : 1}
-      roughness={0.03}
+      roughness={0.025}
       thickness={0.08}
       ior={1.5}
       clearcoat={1}
-      clearcoatRoughness={0.06}
-      specularIntensity={1}
-      envMapIntensity={1.6}
+      clearcoatRoughness={0.05}
+      specularIntensity={1.2}
+      envMapIntensity={1.8}
       color="#ffffff"
+      side={THREE.DoubleSide}
       transparent
     />
   );
@@ -83,16 +88,78 @@ function LiquidMaterial({ color }: { color: string }) {
   return (
     <meshPhysicalMaterial
       transmission={isMobile ? 0.5 : 0.8}
-      roughness={0.06}
+      roughness={0.05}
       thickness={0.5}
       ior={1.33}
       color={color}
       attenuationColor={color}
       attenuationDistance={0.35}
-      envMapIntensity={1.2}
+      clearcoat={0.9}
+      clearcoatRoughness={0.1}
+      envMapIntensity={1.3}
+      emissive={color}
+      emissiveIntensity={0.22}
       transparent
       opacity={0.95}
     />
+  );
+}
+
+/** Bright catch-light ring at the rim: sells "glass" instantly. */
+function RimHighlight({ radius, y }: { radius: number; y: number }) {
+  return (
+    <mesh position={[0, y, 0]} rotation={[Math.PI / 2, 0, 0]}>
+      <torusGeometry args={[radius, 0.005, 8, 48]} />
+      <meshPhysicalMaterial
+        transmission={0.6}
+        roughness={0.02}
+        ior={1.5}
+        clearcoat={1}
+        envMapIntensity={2.5}
+        specularIntensity={1.5}
+        color="#ffffff"
+        transparent
+      />
+    </mesh>
+  );
+}
+
+const RIMS: Record<string, { radius: number; y: number }> = {
+  martini: { radius: 0.422, y: 0.945 },
+  coupe: { radius: 0.39, y: 0.80 },
+  highball: { radius: 0.168, y: 0.995 },
+  rocks: { radius: 0.212, y: 0.548 },
+};
+
+/** Gently rising bubbles for the sparkling highball. */
+function Bubbles() {
+  const refs = useRef<(THREE.Mesh | null)[]>([]);
+  const seeds = useMemo(() =>
+    Array.from({ length: 10 }).map((_, i) => ({
+      x: Math.sin(i * 2.4) * 0.10,
+      z: Math.cos(i * 1.7) * 0.10,
+      r: 0.007 + (i % 3) * 0.004,
+      speed: 0.10 + (i % 4) * 0.035,
+      y0: 0.12 + (i * 0.057) % 0.5,
+    })), []);
+
+  useFrame((_, delta) => {
+    refs.current.forEach((m, i) => {
+      if (!m) return;
+      m.position.y += seeds[i].speed * delta;
+      if (m.position.y > 0.66) m.position.y = 0.12;
+    });
+  });
+
+  return (
+    <group>
+      {seeds.map((s, i) => (
+        <mesh key={i} ref={(el) => { refs.current[i] = el; }} position={[s.x, s.y0, s.z]}>
+          <sphereGeometry args={[s.r, 8, 8]} />
+          <meshBasicMaterial color="#fff8e8" transparent opacity={0.55} />
+        </mesh>
+      ))}
+    </group>
   );
 }
 
@@ -154,7 +221,16 @@ function Garnish({ type }: { type: string }) {
     );
   }
   if (type === 'coupe') {
-    return <CitrusSlice position={[0.36, 0.80, 0]} rotation={[0.25, 0, -0.5]} color="#f5c33b" />;
+    return (
+      <group>
+        {/* Sugared rim */}
+        <mesh position={[0, 0.80, 0]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[0.39, 0.013, 8, 48]} />
+          <meshStandardMaterial color="#f5efdf" roughness={0.95} />
+        </mesh>
+        <CitrusSlice position={[0.345, 0.775, 0]} rotation={[0.15, 0, -0.85]} color="#f5c33b" />
+      </group>
+    );
   }
   if (type === 'highball') {
     return (
@@ -162,12 +238,22 @@ function Garnish({ type }: { type: string }) {
         <IceCube position={[0.04, 0.62, 0.02]} rotation={[0.4, 0.7, 0.2]} />
         <IceCube position={[-0.05, 0.45, -0.03]} rotation={[0.9, 0.2, 0.5]} />
         <IceCube position={[0.02, 0.28, 0.04]} rotation={[0.1, 1.1, 0.8]} size={0.07} />
+        <Bubbles />
         {/* gold stirrer */}
         <mesh position={[0.06, 0.72, -0.04]} rotation={[0.18, 0, -0.14]}>
           <cylinderGeometry args={[0.008, 0.008, 0.85, 8]} />
           <meshStandardMaterial color="#c9a23a" metalness={0.9} roughness={0.2} />
         </mesh>
-        <CitrusSlice position={[0.17, 0.97, 0]} rotation={[0.1, 0, -0.35]} color="#bcd14a" />
+        {/* Mint sprig poking above the rim */}
+        <group position={[-0.08, 0.99, 0.05]}>
+          {[[0, 0, 0, 0.3], [0.035, 0.045, 0.02, -0.4], [-0.03, 0.05, -0.02, 0.9]].map(([x, y, z, rz], i) => (
+            <mesh key={i} position={[x, y, z]} rotation={[0.3, 0, rz]} scale={[1, 1.6, 0.45]}>
+              <sphereGeometry args={[0.028, 10, 10]} />
+              <meshStandardMaterial color="#3f7a3a" roughness={0.45} />
+            </mesh>
+          ))}
+        </group>
+        <CitrusSlice position={[0.15, 0.945, 0]} rotation={[0.08, 0, -0.75]} color="#bcd14a" />
       </group>
     );
   }
@@ -175,7 +261,7 @@ function Garnish({ type }: { type: string }) {
     return (
       <group>
         <IceCube position={[0, 0.27, 0]} rotation={[0.3, 0.8, 0.1]} size={0.13} />
-        <CitrusSlice position={[0.18, 0.55, 0.02]} rotation={[0.2, 0, -0.4]} color="#e8923b" />
+        <CitrusSlice position={[0.175, 0.52, 0.02]} rotation={[0.12, 0, -0.8]} color="#e8923b" />
       </group>
     );
   }
@@ -183,8 +269,8 @@ function Garnish({ type }: { type: string }) {
 }
 
 function Glass({ type = 'martini', position = [0, 0, 0] as [number, number, number], scale = 0.35, liquid = '#e8a33d', rotationY = 0 }) {
-  const glassGeo = useMemo(() => new THREE.LatheGeometry(PROFILES[type], 48), [type]);
-  const liquidGeo = useMemo(() => new THREE.LatheGeometry(LIQUIDS[type], 48), [type]);
+  const glassGeo = useMemo(() => new THREE.LatheGeometry(PROFILES[type], 64), [type]);
+  const liquidGeo = useMemo(() => new THREE.LatheGeometry(LIQUIDS[type], 64), [type]);
 
   return (
     <group position={position} scale={scale} rotation={[0, rotationY, 0]}>
@@ -194,6 +280,7 @@ function Glass({ type = 'martini', position = [0, 0, 0] as [number, number, numb
       <mesh geometry={liquidGeo}>
         <LiquidMaterial color={liquid} />
       </mesh>
+      {!isMobile && type !== 'coupe' && <RimHighlight {...RIMS[type]} />}
       {!isMobile && <Garnish type={type} />}
     </group>
   );
