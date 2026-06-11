@@ -12,33 +12,172 @@ const tier: 'high' | 'mobile' | 'off' = (prefersReduced || (isLowEnd && isMobile
 /* Glass profiles (lathe curves, unit height ~1)                       */
 /* ------------------------------------------------------------------ */
 
+const v2 = (pts: [number, number][]) => pts.map(([x, y]) => new THREE.Vector2(x, y));
+
+/** Smooth a run of profile points with a spline (for curved bowls/shoulders). */
+const splined = (pts: [number, number][], divisions = 20) =>
+  new THREE.SplineCurve(v2(pts)).getPoints(divisions);
+
 const PROFILES: Record<string, THREE.Vector2[]> = {
-  martini: [
+  // Martini stays crisp: it really is a cone.
+  martini: v2([
     [0, 0], [0.30, 0], [0.30, 0.02], [0.08, 0.04], [0.035, 0.07],
     [0.035, 0.52], [0.07, 0.55], [0.43, 0.93], [0.43, 0.95],
     [0.41, 0.95], [0.015, 0.58], [0, 0.58],
-  ].map(([x, y]) => new THREE.Vector2(x, y)),
+  ]),
+  // Coupe gets a smooth, rounded saucer bowl.
   coupe: [
-    [0, 0], [0.30, 0], [0.30, 0.02], [0.08, 0.04], [0.035, 0.07],
-    [0.035, 0.50], [0.07, 0.55], [0.30, 0.62], [0.40, 0.78], [0.40, 0.80],
-    [0.38, 0.80], [0.28, 0.66], [0.015, 0.60], [0, 0.60],
-  ].map(([x, y]) => new THREE.Vector2(x, y)),
+    ...v2([[0, 0], [0.30, 0], [0.30, 0.02], [0.08, 0.04], [0.035, 0.07], [0.035, 0.50]]),
+    ...splined([[0.035, 0.50], [0.10, 0.555], [0.26, 0.60], [0.37, 0.68], [0.40, 0.78]]),
+    ...v2([[0.40, 0.80], [0.38, 0.80]]),
+    ...splined([[0.38, 0.80], [0.345, 0.70], [0.24, 0.625], [0.09, 0.585], [0.015, 0.56]]),
+    ...v2([[0, 0.56]]),
+  ],
+  // Highball gets a slightly weighted base.
   highball: [
-    [0, 0], [0.17, 0], [0.18, 0.02], [0.18, 0.95], [0.17, 1.0],
-    [0.155, 1.0], [0.155, 0.05], [0, 0.05],
-  ].map(([x, y]) => new THREE.Vector2(x, y)),
+    ...v2([[0, 0], [0.16, 0]]),
+    ...splined([[0.16, 0], [0.185, 0.015], [0.18, 0.06]], 8),
+    ...v2([[0.18, 0.95], [0.175, 1.0], [0.158, 1.0], [0.158, 0.10]]),
+    ...splined([[0.158, 0.10], [0.12, 0.085], [0, 0.075]], 8),
+  ],
+  // Rocks: thick base, slight outward taper like real crystal.
   rocks: [
-    [0, 0], [0.21, 0], [0.22, 0.03], [0.22, 0.52], [0.21, 0.55],
-    [0.195, 0.55], [0.195, 0.08], [0, 0.08],
-  ].map(([x, y]) => new THREE.Vector2(x, y)),
+    ...v2([[0, 0], [0.20, 0]]),
+    ...splined([[0.20, 0], [0.225, 0.02], [0.215, 0.07]], 8),
+    ...v2([[0.225, 0.52], [0.22, 0.55], [0.20, 0.55], [0.196, 0.12]]),
+    ...splined([[0.196, 0.12], [0.14, 0.10], [0, 0.09]], 8),
+  ],
 };
 
 const LIQUIDS: Record<string, THREE.Vector2[]> = {
-  martini: [[0, 0.60], [0.345, 0.865], [0, 0.865]].map(([x, y]) => new THREE.Vector2(x, y)),
-  coupe: [[0, 0.62], [0.27, 0.70], [0, 0.70]].map(([x, y]) => new THREE.Vector2(x, y)),
-  highball: [[0, 0.06], [0.145, 0.06], [0.145, 0.70], [0, 0.70]].map(([x, y]) => new THREE.Vector2(x, y)),
-  rocks: [[0, 0.09], [0.185, 0.09], [0.185, 0.38], [0, 0.38]].map(([x, y]) => new THREE.Vector2(x, y)),
+  martini: v2([[0, 0.60], [0.345, 0.865], [0, 0.865]]),
+  coupe: [
+    ...splined([[0, 0.575], [0.10, 0.595], [0.235, 0.635], [0.31, 0.70]], 12),
+    ...v2([[0, 0.70]]),
+  ],
+  highball: v2([[0, 0.08], [0.15, 0.09], [0.15, 0.70], [0, 0.70]]),
+  rocks: v2([[0, 0.10], [0.19, 0.11], [0.19, 0.38], [0, 0.38]]),
 };
+
+function GlassMaterial() {
+  return (
+    <meshPhysicalMaterial
+      transmission={isMobile ? 0.85 : 1}
+      roughness={0.03}
+      thickness={0.08}
+      ior={1.5}
+      clearcoat={1}
+      clearcoatRoughness={0.06}
+      specularIntensity={1}
+      envMapIntensity={1.6}
+      color="#ffffff"
+      transparent
+    />
+  );
+}
+
+function LiquidMaterial({ color }: { color: string }) {
+  return (
+    <meshPhysicalMaterial
+      transmission={isMobile ? 0.5 : 0.8}
+      roughness={0.06}
+      thickness={0.5}
+      ior={1.33}
+      color={color}
+      attenuationColor={color}
+      attenuationDistance={0.35}
+      envMapIntensity={1.2}
+      transparent
+      opacity={0.95}
+    />
+  );
+}
+
+function IceCube({ position, rotation = [0, 0, 0] as [number, number, number], size = 0.075 }: {
+  position: [number, number, number]; rotation?: [number, number, number]; size?: number;
+}) {
+  return (
+    <mesh position={position} rotation={rotation}>
+      <boxGeometry args={[size, size, size]} />
+      <meshPhysicalMaterial
+        transmission={0.92}
+        roughness={0.32}
+        thickness={0.4}
+        ior={1.31}
+        color="#eaf6ff"
+        transparent
+      />
+    </mesh>
+  );
+}
+
+function CitrusSlice({ position, rotation, color = '#f5c33b' }: {
+  position: [number, number, number]; rotation: [number, number, number]; color?: string;
+}) {
+  return (
+    <group position={position} rotation={rotation}>
+      {/* flesh */}
+      <mesh>
+        <cylinderGeometry args={[0.085, 0.085, 0.014, 20]} />
+        <meshStandardMaterial color={color} roughness={0.5} emissive={color} emissiveIntensity={0.12} />
+      </mesh>
+      {/* rind */}
+      <mesh>
+        <torusGeometry args={[0.085, 0.009, 8, 20]} />
+        <meshStandardMaterial color="#d99a18" roughness={0.55} />
+      </mesh>
+    </group>
+  );
+}
+
+function Garnish({ type }: { type: string }) {
+  if (type === 'martini') {
+    // Olive on a gold pick laid across the rim
+    return (
+      <group position={[0, 0.93, 0]} rotation={[0, 0.6, 0.12]}>
+        <mesh rotation={[0, 0, Math.PI / 2]}>
+          <cylinderGeometry args={[0.006, 0.006, 0.62, 8]} />
+          <meshStandardMaterial color="#c9a23a" metalness={0.9} roughness={0.25} />
+        </mesh>
+        <mesh position={[-0.10, -0.02, 0]}>
+          <sphereGeometry args={[0.045, 14, 14]} />
+          <meshStandardMaterial color="#7a8a35" roughness={0.35} />
+        </mesh>
+        <mesh position={[-0.19, -0.02, 0]}>
+          <sphereGeometry args={[0.042, 14, 14]} />
+          <meshStandardMaterial color="#7a8a35" roughness={0.35} />
+        </mesh>
+      </group>
+    );
+  }
+  if (type === 'coupe') {
+    return <CitrusSlice position={[0.36, 0.80, 0]} rotation={[0.25, 0, -0.5]} color="#f5c33b" />;
+  }
+  if (type === 'highball') {
+    return (
+      <group>
+        <IceCube position={[0.04, 0.62, 0.02]} rotation={[0.4, 0.7, 0.2]} />
+        <IceCube position={[-0.05, 0.45, -0.03]} rotation={[0.9, 0.2, 0.5]} />
+        <IceCube position={[0.02, 0.28, 0.04]} rotation={[0.1, 1.1, 0.8]} size={0.07} />
+        {/* gold stirrer */}
+        <mesh position={[0.06, 0.72, -0.04]} rotation={[0.18, 0, -0.14]}>
+          <cylinderGeometry args={[0.008, 0.008, 0.85, 8]} />
+          <meshStandardMaterial color="#c9a23a" metalness={0.9} roughness={0.2} />
+        </mesh>
+        <CitrusSlice position={[0.17, 0.97, 0]} rotation={[0.1, 0, -0.35]} color="#bcd14a" />
+      </group>
+    );
+  }
+  if (type === 'rocks') {
+    return (
+      <group>
+        <IceCube position={[0, 0.27, 0]} rotation={[0.3, 0.8, 0.1]} size={0.13} />
+        <CitrusSlice position={[0.18, 0.55, 0.02]} rotation={[0.2, 0, -0.4]} color="#e8923b" />
+      </group>
+    );
+  }
+  return null;
+}
 
 function Glass({ type = 'martini', position = [0, 0, 0] as [number, number, number], scale = 0.35, liquid = '#e8a33d', rotationY = 0 }) {
   const glassGeo = useMemo(() => new THREE.LatheGeometry(PROFILES[type], 48), [type]);
@@ -47,26 +186,80 @@ function Glass({ type = 'martini', position = [0, 0, 0] as [number, number, numb
   return (
     <group position={position} scale={scale} rotation={[0, rotationY, 0]}>
       <mesh geometry={glassGeo}>
+        <GlassMaterial />
+      </mesh>
+      <mesh geometry={liquidGeo}>
+        <LiquidMaterial color={liquid} />
+      </mesh>
+      {!isMobile && <Garnish type={type} />}
+    </group>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Realistic spirit-style bottle: curved shoulders, neck, cap, label   */
+/* ------------------------------------------------------------------ */
+
+const BOTTLE_PROFILE: THREE.Vector2[] = [
+  ...v2([[0, 0], [0.14, 0]]),
+  ...splined([[0.14, 0], [0.165, 0.02], [0.16, 0.06]], 6),
+  ...v2([[0.16, 0.58]]),
+  // Curved shoulder into the neck
+  ...splined([[0.16, 0.58], [0.15, 0.68], [0.10, 0.75], [0.052, 0.79]], 14),
+  ...v2([[0.046, 0.96], [0.058, 0.965], [0.058, 1.0], [0.0, 1.0]]),
+];
+
+const BOTTLE_LIQUID: THREE.Vector2[] = [
+  ...v2([[0, 0.025], [0.145, 0.03], [0.145, 0.56]]),
+  ...splined([[0.145, 0.56], [0.135, 0.66], [0.09, 0.72], [0.04, 0.755]], 10),
+  ...v2([[0, 0.755]]),
+];
+
+function Bottle({ position, tint, height = 0.62, label = '#efe6d0' }: {
+  position: [number, number, number]; tint: string; height?: number; label?: string;
+}) {
+  const bodyGeo = useMemo(() => new THREE.LatheGeometry(BOTTLE_PROFILE, 32), []);
+  const liquidGeo = useMemo(() => new THREE.LatheGeometry(BOTTLE_LIQUID, 32), []);
+
+  return (
+    <group position={position} scale={height}>
+      {/* Tinted glass shell */}
+      <mesh geometry={bodyGeo}>
         <meshPhysicalMaterial
-          transmission={isMobile ? 0.85 : 1}
-          roughness={0.04}
-          thickness={0.05}
-          ior={1.45}
-          clearcoat={1}
-          clearcoatRoughness={0.1}
-          color="#ffffff"
+          transmission={isMobile ? 0.6 : 0.9}
+          roughness={0.05}
+          thickness={0.15}
+          ior={1.5}
+          color={tint}
+          attenuationColor={tint}
+          attenuationDistance={0.6}
+          clearcoat={0.8}
+          envMapIntensity={1.4}
           transparent
         />
       </mesh>
+      {/* Liquid inside */}
       <mesh geometry={liquidGeo}>
         <meshPhysicalMaterial
-          transmission={0.6}
-          roughness={0.15}
-          thickness={0.4}
-          color={liquid}
+          transmission={0.4}
+          roughness={0.1}
+          thickness={0.6}
+          color={tint}
+          attenuationColor={tint}
+          attenuationDistance={0.25}
           transparent
-          opacity={0.92}
+          opacity={0.96}
         />
+      </mesh>
+      {/* Label band */}
+      <mesh position={[0, 0.33, 0]}>
+        <cylinderGeometry args={[0.168, 0.168, 0.2, 24, 1, true]} />
+        <meshStandardMaterial color={label} roughness={0.7} side={THREE.DoubleSide} />
+      </mesh>
+      {/* Gold foil cap */}
+      <mesh position={[0, 0.945, 0]}>
+        <cylinderGeometry args={[0.062, 0.062, 0.11, 16]} />
+        <meshStandardMaterial color="#c9a23a" metalness={0.92} roughness={0.22} />
       </mesh>
     </group>
   );
@@ -114,7 +307,7 @@ function useSignTexture() {
 /* The Luma bar (destination of the walk)                              */
 /* ------------------------------------------------------------------ */
 
-const BOTTLE_COLORS = ['#a3501e', '#5e7a2f', '#8a2440', '#b8862f', '#3f5e6e', '#7a4a8a', '#9c6b1f', '#4a6e3f', '#6e2f2f', '#2f4a6e'];
+const BOTTLE_COLORS = ['#2e4a1e', '#8a5516', '#5a1620', '#b8862f', '#1d3a4a', '#3a1c10', '#9c6b1f', '#26421d', '#6e2317', '#414a1d'];
 
 function LumaBar() {
   const signTex = useSignTexture();
@@ -170,18 +363,15 @@ function LumaBar() {
       {Array.from({ length: bottles }).map((_, i) => {
         const shelf = i % 2 === 0 ? 1.55 : 2.3;
         const x = -2.6 + (Math.floor(i / 2) * 1.3) + (i % 2) * 0.4;
-        const h = 0.45 + ((i * 7) % 3) * 0.09;
+        const h = 0.56 + ((i * 7) % 3) * 0.07;
         return (
-          <group key={i} position={[x, shelf + 0.025, -1.65]}>
-            <mesh position={[0, h / 2, 0]}>
-              <cylinderGeometry args={[0.085, 0.095, h, 16]} />
-              <meshPhysicalMaterial color={BOTTLE_COLORS[i]} transmission={0.5} roughness={0.1} thickness={0.3} transparent />
-            </mesh>
-            <mesh position={[0, h + 0.07, 0]}>
-              <cylinderGeometry args={[0.03, 0.04, 0.16, 12]} />
-              <meshPhysicalMaterial color={BOTTLE_COLORS[i]} transmission={0.4} roughness={0.1} transparent />
-            </mesh>
-          </group>
+          <Bottle
+            key={i}
+            position={[x, shelf + 0.025, -1.65]}
+            tint={BOTTLE_COLORS[i]}
+            height={h}
+            label={i % 3 === 0 ? '#efe6d0' : i % 3 === 1 ? '#1a130a' : '#caa84e'}
+          />
         );
       })}
 
