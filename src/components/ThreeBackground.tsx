@@ -5,8 +5,11 @@ import * as THREE from 'three';
 
 const isMobile = typeof window !== 'undefined' && matchMedia('(max-width: 768px), (pointer: coarse)').matches;
 const prefersReduced = typeof window !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
-const isLowEnd = typeof window !== 'undefined' && navigator.hardwareConcurrency <= 4;
-const tier: 'high' | 'mobile' | 'off' = (prefersReduced || (isLowEnd && isMobile)) ? 'off' : isMobile ? 'mobile' : 'high';
+// Only genuinely constrained devices skip WebGL. iPhones clamp
+// hardwareConcurrency to 4, so core count is NOT a reliable signal;
+// deviceMemory is only reported by Chrome on Android and is trustworthy.
+const isLowEnd = typeof window !== 'undefined' && (navigator as any).deviceMemory !== undefined && (navigator as any).deviceMemory <= 2;
+const tier: 'high' | 'mobile' | 'off' = (prefersReduced || isLowEnd) ? 'off' : isMobile ? 'mobile' : 'high';
 
 /* ------------------------------------------------------------------ */
 /* Glass profiles (lathe curves, unit height ~1)                       */
@@ -539,9 +542,35 @@ function CameraJourney() {
 
 function CssBackdrop() {
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none w-full h-full bg-gradient-to-b from-[#0e0a05] via-[#080503] to-black">
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-gold/5 blur-3xl" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-amber-700/10 blur-3xl" />
+    <div className="fixed inset-0 z-0 pointer-events-none w-full h-full overflow-hidden bg-gradient-to-b from-[#15100a] via-[#0a0704] to-black">
+      {/* Warm glow rising from below, like the bar at the end of the room */}
+      <div
+        className="absolute bottom-[-20%] left-1/2 -translate-x-1/2 w-[140%] h-[55%]"
+        style={{ background: 'radial-gradient(ellipse at center bottom, rgba(201,162,58,0.22) 0%, rgba(201,162,58,0.07) 40%, transparent 70%)' }}
+      />
+      {/* Drifting glow orbs */}
+      <div className="absolute top-[18%] left-[12%] w-72 h-72 rounded-full bg-gold/10 blur-3xl animate-pulse" style={{ animationDuration: '5s' }} />
+      <div className="absolute top-[45%] right-[8%] w-80 h-80 rounded-full bg-amber-600/10 blur-3xl animate-pulse" style={{ animationDuration: '7s' }} />
+      <div className="absolute bottom-[15%] left-[30%] w-64 h-64 rounded-full bg-gold-warm/10 blur-3xl animate-pulse" style={{ animationDuration: '6s' }} />
+      {/* Scattered points of light, like distant string lights */}
+      {[
+        [8, 12], [22, 7], [38, 14], [55, 6], [70, 11], [86, 9],
+        [14, 22], [45, 19], [78, 24], [62, 16], [30, 25], [92, 18],
+      ].map(([x, y], i) => (
+        <div
+          key={i}
+          className="absolute rounded-full bg-[#ffd9a0] animate-pulse"
+          style={{
+            left: `${x}%`,
+            top: `${y}%`,
+            width: i % 3 === 0 ? 4 : 3,
+            height: i % 3 === 0 ? 4 : 3,
+            opacity: 0.6,
+            boxShadow: '0 0 8px 2px rgba(255,217,160,0.45)',
+            animationDuration: `${3 + (i % 4)}s`,
+          }}
+        />
+      ))}
     </div>
   );
 }
@@ -582,11 +611,11 @@ export default function ThreeBackground() {
         gl={{ antialias: !isMobile, powerPreference: 'high-performance' }}
         frameloop={frameloop}
       >
-        <fogExp2 attach="fog" args={['#080503', 0.032]} />
+        <fogExp2 attach="fog" args={['#080503', isMobile ? 0.022 : 0.032]} />
 
-        <ambientLight intensity={0.25} />
-        <directionalLight position={[4, 8, 2]} intensity={1.1} color="#e2b859" />
-        <pointLight position={[0, 3.6, -4]} color="#ff9d5c" intensity={16} distance={16} decay={2} />
+        <ambientLight intensity={isMobile ? 0.45 : 0.25} />
+        <directionalLight position={[4, 8, 2]} intensity={isMobile ? 1.5 : 1.1} color="#e2b859" />
+        <pointLight position={[0, 3.6, -4]} color="#ff9d5c" intensity={isMobile ? 22 : 16} distance={16} decay={2} />
 
         <Floor />
         <StringLights />
