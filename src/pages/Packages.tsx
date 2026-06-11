@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronDown } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import SEO from '../components/SEO';
 import { useCardTilt } from '../hooks/useCardTilt';
 
