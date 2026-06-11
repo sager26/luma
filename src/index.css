@@ -74,7 +74,7 @@
   }
 
   .glass-card {
-    @apply bg-ink-card/60 border border-gold/30 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(201,162,58,0.05)] hover:shadow-[0_8px_32px_0_rgba(201,162,58,0.15)] hover:border-gold/50 transition-all duration-500;
+    @apply bg-ink-card/60 border border-gold/30 backdrop-blur-md md:backdrop-blur-xl shadow-[0_8px_32px_0_rgba(201,162,58,0.05)] hover:shadow-[0_8px_32px_0_rgba(201,162,58,0.15)] hover:border-gold/50 transition-all duration-500;
   }
 
   .btn-luxury {

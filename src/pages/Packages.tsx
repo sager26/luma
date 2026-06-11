@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronDown } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
 import SEO from '../components/SEO';
+import { useCardTilt } from '../hooks/useCardTilt';
 
 const packageFaqs = [
   {
@@ -27,59 +27,28 @@ const packageFaqs = [
   }
 ];
 
-/**
- * PackageCard with subtle 3D tilt effect on mouse hover.
- */
-function PackageCard({ 
-  tier, name, tagline, features, note, featured = false, delay = 0, ctaText 
+function PackageCard({
+  tier, name, tagline, features, note, featured = false, delay = 0, ctaText
 }: any) {
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!cardRef.current) return;
-    const r = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - r.left;
-    const y = e.clientY - r.top;
-    
-    // Calculate rotation (-3 to 3 degrees)
-    const rx = ((y / r.height) - 0.5) * -4;
-    const ry = ((x / r.width) - 0.5) * 4;
-    
-    // Parallax values for inner elements
-    const px = ((x / r.width) - 0.5) * -15;
-    const py = ((y / r.height) - 0.5) * -15;
-    
-    cardRef.current.style.setProperty('--rx', `${rx}deg`);
-    cardRef.current.style.setProperty('--ry', `${ry}deg`);
-    cardRef.current.style.setProperty('--px', `${px}px`);
-    cardRef.current.style.setProperty('--py', `${py}px`);
-    cardRef.current.style.setProperty('--mx', `${x}px`);
-    cardRef.current.style.setProperty('--my', `${y}px`);
-  };
-
-  const handleMouseLeave = () => {
-    if (!cardRef.current) return;
-    cardRef.current.style.setProperty('--rx', '0deg');
-    cardRef.current.style.setProperty('--ry', '0deg');
-    cardRef.current.style.setProperty('--px', '0px');
-    cardRef.current.style.setProperty('--py', '0px');
-  };
+  const { cardRef, rotateX, rotateY, onMouseMove, onMouseLeave } = useCardTilt(3);
 
   return (
     <motion.article
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      ref={cardRef as React.RefObject<HTMLElement>}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      initial={{ opacity: 0, y: 30, scale: 0.97, filter: 'blur(6px)' }}
+      whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
       viewport={{ once: true }}
-      transition={{ delay, duration: 1 }}
+      transition={{ delay, duration: 1, ease: [0.22, 1, 0.36, 1] }}
       className={`relative group bg-ink-card/50 border border-gold/10 rounded-lg overflow-hidden transition-all duration-300 hover:border-gold/30 hover:shadow-[0_20px_50px_rgba(184,145,42,0.1)] ${
         featured ? 'ring-1 ring-gold/20' : ''
       }`}
       style={{
-        transform: 'perspective(1200px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))',
-        transformStyle: 'preserve-3d'
+        rotateX,
+        rotateY,
+        transformPerspective: 1200,
+        transformStyle: 'preserve-3d',
       }}
     >
       {/* Mouse Halo */}

@@ -1,4 +1,5 @@
-import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
+import { useRef } from 'react';
+import { motion, useMotionValue, useSpring, useTransform, useScroll } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Award, GlassWater, Users, MapPin, Sparkles } from 'lucide-react';
 import { useEffect } from 'react';
@@ -9,7 +10,6 @@ import TestimonialCarousel from '../components/TestimonialCarousel';
 
 export default function Home() {
   const mouseX = useMotionValue(0);
-
   const mouseY = useMotionValue(0);
 
   const springX = useSpring(mouseX, { stiffness: 100, damping: 30 });
@@ -18,25 +18,27 @@ export default function Home() {
   const textParallaxX = useTransform(springX, [-0.5, 0.5], [20, -20]);
   const textParallaxY = useTransform(springY, [-0.5, 0.5], [20, -20]);
 
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  const heroOpacity = useTransform(heroProgress, [0, 0.8], [1, 0]);
+  const heroScale = useTransform(heroProgress, [0, 0.8], [1, 0.93]);
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       const { innerWidth, innerHeight } = window;
       mouseX.set((e.clientX / innerWidth) - 0.5);
       mouseY.set((e.clientY / innerHeight) - 0.5);
     };
-
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [mouseX, mouseY]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
+    visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
   };
 
   const itemVariants = {
@@ -46,15 +48,20 @@ export default function Home() {
 
   return (
     <div className="pt-20">
-      <SEO 
+      <SEO
         title="Luma · Premium Alcohol-Free Mocktail Bar in Amman, Jordan"
         description="Luma is Amman's first premium alcohol-free mobile mocktail bar. We provide bespoke botanical drinks, premium glassware, and elite service for weddings and luxury events in Jordan."
         keywords="best mocktails amman, mocktail bar jordan, luxury mobile bar, non-alcoholic drinks amman, halal bar catering, wedding beverage service jordan, premium events amman"
         image="https://lumajordan.com/IMG_5411.JPG"
       />
+
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center relative px-6 text-center overflow-hidden">
-        <motion.div 
+      <motion.section
+        ref={heroRef}
+        style={{ opacity: heroOpacity, scale: heroScale }}
+        className="min-h-screen flex items-center justify-center relative px-6 text-center overflow-hidden"
+      >
+        <motion.div
           className="relative z-20 max-w-4xl mx-auto"
           initial="hidden"
           animate="visible"
@@ -64,16 +71,16 @@ export default function Home() {
           <motion.div variants={itemVariants} className="label-micro mb-6 block drop-shadow-lg">
             Premium Mocktail Bar · Amman, Jordan
           </motion.div>
-          
-          <motion.div 
-            variants={itemVariants} 
+
+          <motion.div
+            variants={itemVariants}
             className="inline-block px-4 py-1.5 border border-gold/40 rounded-full bg-gold/10 backdrop-blur-sm text-gold-warm text-base font-semibold tracking-[0.2em] uppercase mb-8"
           >
             100% Alcohol-Free
           </motion.div>
 
-          <motion.h1 
-            variants={itemVariants} 
+          <motion.h1
+            variants={itemVariants}
             className="display text-6xl md:text-9xl mb-8 leading-tight tracking-tight relative"
           >
             <span className="block overflow-hidden">
@@ -104,19 +111,19 @@ export default function Home() {
 
           <motion.div variants={itemVariants} className="flex flex-col items-center gap-4 mt-8 w-full max-w-sm mx-auto sm:max-w-none">
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center w-full">
-              <BookingButton 
-                text="Secure Your Date" 
-                variant="primary" 
+              <BookingButton
+                text="Secure Your Date"
+                variant="primary"
                 className="w-full sm:w-auto px-10 py-4 shadow-[0_4px_30px_rgba(201,162,58,0.4)]"
               />
-              <Link 
-                to="/packages" 
+              <Link
+                to="/packages"
                 className="btn-luxury uppercase tracking-[0.25em] text-sm text-center border border-cream/30 text-cream hover:bg-cream/10 backdrop-blur-sm transition-all duration-500 rounded-sm w-full sm:w-auto px-10 py-4"
               >
                 Explore Collections
               </Link>
             </div>
-            <p className="text-sm font-serif italic text-gold-warm mt-2">Now booking Summer & Autumn 2026</p>
+            <p className="text-sm font-serif italic text-gold-warm mt-2">Now booking Summer &amp; Autumn 2026</p>
           </motion.div>
 
           <motion.div
@@ -128,13 +135,13 @@ export default function Home() {
             <span className="hidden md:inline-block w-12 h-px bg-gold/30"></span>
           </motion.div>
         </motion.div>
-      </section>
+      </motion.section>
 
       {/* Trust Banner */}
       <section className="py-12 bg-cream/[0.02] border-y border-cream/5 flex items-center justify-center overflow-hidden whitespace-nowrap">
         <div className="flex gap-12 text-base uppercase tracking-[0.2em] text-gold font-medium">
           {Array(10).fill("◆ Amman's Premier Bar ◆ Alcohol-Free ◆ Premium Glassware ◆").map((text, i) => (
-            <motion.span 
+            <motion.span
               key={i}
               animate={{ x: "-100%" }}
               transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
@@ -145,39 +152,44 @@ export default function Home() {
         </div>
       </section>
 
-
       {/* Features Section */}
       <section className="py-40 px-6 bg-ink-dark/50 relative z-10 backdrop-blur-md border-y border-gold/5">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-32">
+          <motion.div
+            className="text-center mb-32"
+            initial={{ opacity: 0, y: 30, scale: 0.97, filter: 'blur(8px)' }}
+            whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          >
             <span className="label-micro block mb-4 text-gold-warm">The Luma Standards</span>
             <h2 className="display text-5xl md:text-7xl text-cream tracking-tight">Luxury in every detail</h2>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {[
-              { 
+              {
                 icon: <Sparkles className="w-12 h-12 text-gold mb-8" />,
-                title: "Handcrafted Drinks", 
-                desc: "Signature botanical drinks made with cold-pressed essences. Prepared live by specialized bartenders who understand the ritual." 
+                title: "Handcrafted Drinks",
+                desc: "Signature botanical drinks made with cold-pressed essences. Prepared live by specialized bartenders who understand the ritual."
               },
-              { 
+              {
                 icon: <GlassWater className="w-12 h-12 text-gold mb-8" />,
-                title: "Premium Glassware", 
-                desc: "Every guest is served in genuine premium martinis, highballs, or rocks glasses. Weight, clarity, and precision." 
+                title: "Premium Glassware",
+                desc: "Every guest is served in genuine premium martinis, highballs, or rocks glasses. Weight, clarity, and precision."
               },
-              { 
+              {
                 icon: <Award className="w-12 h-12 text-gold mb-8" />,
-                title: "Branded Station", 
-                desc: "A sophisticated furniture piece that acts as a focal point for your event's architecture. Seamless setup and strike." 
+                title: "Branded Station",
+                desc: "A sophisticated furniture piece that acts as a focal point for your event's architecture. Seamless setup and strike."
               }
             ].map((f, i) => (
-              <motion.div 
+              <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 40, scale: 0.96, filter: 'blur(6px)' }}
+                whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ delay: i * 0.2, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ delay: i * 0.15, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
                 className="group p-12 flex flex-col items-center text-center glass-card rounded-2xl hover:border-gold/40 transition-all"
               >
                 <div className="transform group-hover:scale-110 transition-transform duration-500">
@@ -201,12 +213,12 @@ export default function Home() {
               { icon: <Users className="w-6 h-6" />, val: "Full Service", label: "Uniformed Staff · Elite Prep" },
               { icon: <MapPin className="w-6 h-6" />, val: "All Jordan", label: "We travel to any venue" }
             ].map((s, i) => (
-              <motion.div 
+              <motion.div
                 key={i}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
+                initial={{ opacity: 0, y: 24, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ delay: i * 0.1, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                 className="text-center group"
               >
                 <div className="text-gold mb-4 flex justify-center group-hover:text-gold transition-colors duration-700">
@@ -226,11 +238,12 @@ export default function Home() {
 
       {/* Short CTA Section */}
       <section className="py-32 bg-radial-gradient from-gold/10 via-transparent to-transparent text-center border-t border-gold/5 px-6">
-        <motion.div 
+        <motion.div
           className="max-w-4xl mx-auto"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20, scale: 0.97 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
           <span className="label-micro block mb-6">Start Planning</span>
           <h2 className="display text-4xl md:text-6xl mb-12">
